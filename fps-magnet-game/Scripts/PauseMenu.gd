@@ -2,9 +2,11 @@ extends Control
 
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS  # importnat I guess, so it can detect pause input even when paused
 
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		_toggle_pause()
@@ -18,7 +20,7 @@ func _toggle_pause() -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
+	
 
 
 func _on_resume_pressed() -> void:
