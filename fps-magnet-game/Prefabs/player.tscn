@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://c3cv48njgxap4"]
+
+[ext_resource type="Script" uid="uid://bqbfykosf0sf6" path="res://Scripts/player.gd" id="1_y6xdh"]
+[ext_resource type="PackedScene" uid="uid://bh5pcdl73hmjt" path="res://Prefabs/left_hand.tscn" id="2_y5hcb"]
+[ext_resource type="PackedScene" uid="uid://dcr51e0astmvi" path="res://Prefabs/right_hand.tscn" id="3_2nftw"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l8m6k"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qm7o4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y5hcb"]
+size = Vector3(2.4361572, 2.0870972, 0.23382568)
+
+[node name="Player" type="CharacterBody3D" unique_id=2443985]
+script = ExtResource("1_y6xdh")
+camera_sens = 20
+
+[node name="body" type="CollisionShape3D" parent="." unique_id=2097978217]
+shape = SubResource("CapsuleShape3D_l8m6k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="body" unique_id=1030973801]
+mesh = SubResource("CapsuleMesh_qm7o4")
+
+[node name="Despawn_Zone" type="Area3D" parent="." unique_id=64975404]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.63526464)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Despawn_Zone" unique_id=253053499]
+transform = Transform3D(-2.6226834e-08, -0.6, 0, 0.6, -2.6226834e-08, 0, 0, 0, 0.6, 0.016534418, 0.0057495097, 0.026605248)
+shape = SubResource("BoxShape3D_y5hcb")
+debug_color = Color(0.99607843, 0, 0.18039216, 0.3529412)
+
+[node name="Left_Spawn_Point" type="Node3D" parent="." unique_id=981359528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, -0.8424907)
+
+[node name="Right_Spawn_Point" type="Node3D" parent="." unique_id=521906188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.8424907)
+
+[node name="left_hand" parent="." unique_id=2118150174 instance=ExtResource("2_y5hcb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.452, 0, -0.758)
+
+[node name="right_hand" parent="." unique_id=2082743607 instance=ExtResource("3_2nftw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.758)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=299561298]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4515493, -0.40378726)
+
+[connection signal="body_entered" from="Despawn_Zone" to="left_hand" method="_on_despawn_zone_body_entered"]

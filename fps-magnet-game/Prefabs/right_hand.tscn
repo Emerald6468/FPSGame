@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dcr51e0astmvi"]
+
+[ext_resource type="Script" uid="uid://d104ykaaxal11" path="res://Scripts/hand.gd" id="1_f8146"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1wxba"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_pvwq0"]
+
+[node name="RightHand" type="RigidBody3D" unique_id=83433074]
+gravity_scale = 0.0
+script = ExtResource("1_f8146")
+hand = "right"
+
+[node name="right_hand" type="CollisionShape3D" parent="." unique_id=2082743607]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+shape = SubResource("BoxShape3D_1wxba")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="right_hand" unique_id=815246363]
+mesh = SubResource("BoxMesh_pvwq0")
