@@ -4,13 +4,12 @@ extends CharacterBody3D
 @export var SPEED = 10.0
 @export var JUMP_VELOCITY = 4.5
 
-
 var look_dir:Vector2
 @onready var camera: Camera3D = $Camera3D
 @export var camera_sens = 50
 
 #arm variables
-var handspeed = 10
+@export var handspeed = 10
 @onready var despawn_zone: Area3D = $Despawn_Zone
 
 @onready var left_spawn_point: Node3D = $Left_Spawn_Point
@@ -49,11 +48,24 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.z = move_toward(velocity.z, 0, SPEED)
+			
+	else:
+		velocity.x = 0
+		velocity.z = 0
 	
+	
+	#checks to see if it needs to delete hands
 	var body_list = despawn_zone.get_overlapping_bodies()
-	print(body_list)
+	#print(body_list)
 	
 	if despawn_zone.has_overlapping_bodies():
+		for body in body_list:
+			if body is Hand:
+				var hand : Hand = body
+				if hand.hand == "left" and !left_extending:
+					left_arm_out = false
+				if hand.hand == "right" and !right_extending:
+					right_arm_out = false
 		for i in range(len(despawn_zone.get_overlapping_bodies())):
 			var checked_body = str(body_list[i])
 			if checked_body.contains("LeftHand") and !left_extending:
@@ -80,6 +92,8 @@ func _input(event: InputEvent):
 			right_extending = !right_extending
 			Global.justclicked = true;
 			if !right_arm_out: spawn_righthand()
+		Global.left_extending = left_extending
+		Global.right_extending = right_extending
 	
 
 func spawn_lefthand():
@@ -102,7 +116,7 @@ func spawn_righthand():
 	right_hand.linear_velocity = right_spawn_point.global_transform.basis.z * -1 * handspeed
 
 func _rotate_camera(delta: float, sens_mod: float = 1.0):
-	var input = Input.get_vector("ui_left","ui_right","ui_down","ui_up")
+	var input := Input.get_vector("ui_left","ui_right","ui_down","ui_up")
 	look_dir += input
 	rotation.y -= look_dir.x * camera_sens * delta
 	camera.rotation.x = clamp(camera.rotation.x - look_dir.y * camera_sens * sens_mod * delta, -1.5,1.5)

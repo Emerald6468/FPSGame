@@ -45,5 +45,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.758)
 [node name="Camera3D" type="Camera3D" parent="." unique_id=299561298]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4515493, -0.40378726)
-
-[connection signal="body_entered" from="Despawn_Zone" to="left_hand" method="_on_despawn_zone_body_entered"]

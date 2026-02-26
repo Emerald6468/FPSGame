@@ -51,31 +51,31 @@ shape = SubResource("BoxShape3D_gxa7t")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D" unique_id=756624088]
 mesh = SubResource("BoxMesh_abw0d")
 
-[node name="Box" type="StaticBody3D" parent="." unique_id=716899486]
+[node name="Wall" type="StaticBody3D" parent="." unique_id=716899486]
 transform = Transform3D(2.9249961, 0, 0, 0, 1.8350781, 0, 0, 0, 2.6594563, 13.392733, 1.157341, -12.087105)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Box" unique_id=1972578131]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall" unique_id=1972578131]
 shape = SubResource("BoxShape3D_qm7o4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Box/CollisionShape3D" unique_id=1184550753]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/CollisionShape3D" unique_id=1184550753]
 mesh = SubResource("BoxMesh_vsw3f")
 
-[node name="Box2" type="StaticBody3D" parent="." unique_id=682765076]
+[node name="Wall2" type="StaticBody3D" parent="." unique_id=682765076]
 transform = Transform3D(2.9249961, 0, 0, 0, 4.8295, 0, 0, 0, 2.6594563, -5.401697, 1.157341, -7.692794)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Box2" unique_id=501651361]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall2" unique_id=501651361]
 shape = SubResource("BoxShape3D_qm7o4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Box2/CollisionShape3D" unique_id=1344408024]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2/CollisionShape3D" unique_id=1344408024]
 mesh = SubResource("BoxMesh_vsw3f")
 
-[node name="Box3" type="StaticBody3D" parent="." unique_id=626875483]
+[node name="Wall3" type="StaticBody3D" parent="." unique_id=626875483]
 transform = Transform3D(2.9249961, 0, 0, 0, 4.8295, 0, 0, 0, 2.6594563, 10.857229, 1.157341, 8.643327)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Box3" unique_id=119962684]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall3" unique_id=119962684]
 shape = SubResource("BoxShape3D_qm7o4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Box3/CollisionShape3D" unique_id=1963676981]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall3/CollisionShape3D" unique_id=1963676981]
 mesh = SubResource("BoxMesh_vsw3f")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=891367659]

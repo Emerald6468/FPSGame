@@ -1,6 +1,9 @@
+class_name Hand
 extends RigidBody3D
 
 @export var hand = "left"
+@onready var hand_sensor: Area3D = $HandSensor
+var just_touched = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -12,20 +15,27 @@ func _process(delta: float) -> void:
 	match hand:
 		"left":
 			if !Global.left_arm_out: self.queue_free()
-			if !Global.left_extending and Global.justclicked:
+			if Global.justclicked:
 				Global.justclicked = false;
 				linear_velocity = -linear_velocity
 				
+			var left_sensor_list = hand_sensor.get_overlapping_bodies()
+			if hand_sensor.has_overlapping_bodies():
+				for i in range(len(left_sensor_list)):
+					if str(left_sensor_list[i]).contains("Wall") and Global.left_extending:
+						print("TOUCHING WALL")
+						Global.left_extending = false
+						linear_velocity = -linear_velocity
+				
 		"right":
 			if !Global.right_arm_out: self.queue_free()
-			if !Global.right_extending and Global.justclicked:
+			if Global.justclicked:
 				Global.justclicked = false;
 				linear_velocity = -linear_velocity
-
-
-func _on_despawn_zone_body_entered(body: Node3D) -> void:
-	print("delete left")
-	if hand == "left" and !Global.left_extending: 
-		Global.left_arm_out = false
-		self.queue_free()
-		
+			var right_sensor_list = hand_sensor.get_overlapping_bodies()
+			if hand_sensor.has_overlapping_bodies():
+				for i in range(len(right_sensor_list)):
+					if str(right_sensor_list[i]).contains("Wall") and Global.right_extending:
+						print("TOUCHING WALL")
+						Global.right_extending = false
+						linear_velocity = -linear_velocity
