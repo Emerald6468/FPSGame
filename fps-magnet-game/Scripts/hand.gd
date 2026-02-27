@@ -5,6 +5,14 @@ extends RigidBody3D
 @onready var hand_sensor: Area3D = $HandSensor
 var just_touched = false
 
+
+enum hand_states{
+	extending,
+	retracting,
+	still,
+}
+var holdingon = false
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -14,6 +22,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	match hand:
 		"left":
+			
 			if !Global.left_arm_out: self.queue_free()
 			if Global.justclicked:
 				Global.justclicked = false;
@@ -21,8 +30,8 @@ func _process(delta: float) -> void:
 				
 			var left_sensor_list = hand_sensor.get_overlapping_bodies()
 			if hand_sensor.has_overlapping_bodies():
-				for i in range(len(left_sensor_list)):
-					if str(left_sensor_list[i]).contains("Wall") and Global.left_extending:
+				for body in left_sensor_list:
+					if body.is_in_group("Walls"):
 						print("TOUCHING WALL")
 						Global.left_extending = false
 						linear_velocity = -linear_velocity
@@ -34,8 +43,8 @@ func _process(delta: float) -> void:
 				linear_velocity = -linear_velocity
 			var right_sensor_list = hand_sensor.get_overlapping_bodies()
 			if hand_sensor.has_overlapping_bodies():
-				for i in range(len(right_sensor_list)):
-					if str(right_sensor_list[i]).contains("Wall") and Global.right_extending:
+				for body in right_sensor_list:
+					if body.is_in_group("Walls") and Global.right_extending:
 						print("TOUCHING WALL")
 						Global.right_extending = false
 						linear_velocity = -linear_velocity

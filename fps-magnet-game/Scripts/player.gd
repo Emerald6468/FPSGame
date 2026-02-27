@@ -12,8 +12,8 @@ var look_dir:Vector2
 @export var handspeed = 10
 @onready var despawn_zone: Area3D = $Despawn_Zone
 
-@onready var left_spawn_point: Node3D = $Left_Spawn_Point
-@onready var right_spawn_point: Node3D = $Right_Spawn_Point
+@onready var left_spawn_point: Node3D = %Left_Spawn_Point
+@onready var right_spawn_point: Node3D = %Right_Spawn_Point
 
 @onready var left_hand_scene = preload("res://Prefabs/left_hand.tscn")
 @onready var right_hand_scene = preload("res://Prefabs/right_hand.tscn")

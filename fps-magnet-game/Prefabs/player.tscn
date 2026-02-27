@@ -30,12 +30,6 @@ transform = Transform3D(-2.6226834e-08, -0.6, 0, 0.6, -2.6226834e-08, 0, 0, 0, 0
 shape = SubResource("BoxShape3D_y5hcb")
 debug_color = Color(0.99607843, 0, 0.18039216, 0.3529412)
 
-[node name="Left_Spawn_Point" type="Node3D" parent="." unique_id=981359528]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, -0.8424907)
-
-[node name="Right_Spawn_Point" type="Node3D" parent="." unique_id=521906188]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.8424907)
-
 [node name="left_hand" parent="." unique_id=2118150174 instance=ExtResource("2_y5hcb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.452, 0, -0.758)
 
@@ -45,3 +39,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 0, -0.758)
 [node name="Camera3D" type="Camera3D" parent="." unique_id=299561298]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4515493, -0.40378726)
+
+[node name="Left_Spawn_Point" type="Node3D" parent="Camera3D" unique_id=981359528]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, -0.4515493, -0.43870342)
+
+[node name="Right_Spawn_Point" type="Node3D" parent="Camera3D" unique_id=521906188]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, -0.4515493, -0.43870342)
