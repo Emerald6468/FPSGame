@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bj2ofiw0qalr6"]
+
+[ext_resource type="PackedScene" uid="uid://800ldxcgnoou" path="res://Assets/right hand.fbx" id="1_1880e"]
+
+[node name="right hand" unique_id=914909541 instance=ExtResource("1_1880e")]
