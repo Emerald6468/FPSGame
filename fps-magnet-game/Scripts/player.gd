@@ -24,6 +24,8 @@ var right_extending = Global.right_extending
 
 
 func _physics_process(delta: float) -> void:
+	if Global.justclicked:
+		Global.justclicked = false;
 	left_arm_out = Global.left_arm_out
 	right_arm_out = Global.right_arm_out
 	left_extending = Global.left_extending
@@ -50,6 +52,7 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, SPEED)
 			
 	else:
+		Global.player_point = self.global_position
 		velocity.x = 0
 		velocity.z = 0
 	
@@ -85,10 +88,12 @@ func _input(event: InputEvent):
 	#hand stuff
 	if event is InputEventMouseButton:
 		if Input.is_action_just_pressed("left_click"):
+			Global.leftclicked = true
 			left_extending = !left_extending
 			Global.justclicked = true;
 			if !left_arm_out: spawn_lefthand()
 		if Input.is_action_just_pressed("right_click"):
+			Global.leftclicked = false
 			right_extending = !right_extending
 			Global.justclicked = true;
 			if !right_arm_out: spawn_righthand()
@@ -104,7 +109,7 @@ func spawn_lefthand():
 	var left_hand = left_hand_scene.instantiate()
 	add_sibling(left_hand)
 	left_hand.transform = left_spawn_point.global_transform
-	left_hand.linear_velocity = left_spawn_point.global_transform.basis.z * -1 * handspeed
+	#left_hand.linear_velocity = left_spawn_point.global_transform.basis.z * -1 * handspeed
 
 func spawn_righthand():
 	Global.justclicked = false;
@@ -113,7 +118,7 @@ func spawn_righthand():
 	var right_hand = right_hand_scene.instantiate()
 	add_sibling(right_hand)
 	right_hand.transform = right_spawn_point.global_transform
-	right_hand.linear_velocity = right_spawn_point.global_transform.basis.z * -1 * handspeed
+	#right_hand.linear_velocity = right_spawn_point.global_transform.basis.z * -1 * handspeed
 
 func _rotate_camera(delta: float, sens_mod: float = 1.0):
 	var input := Input.get_vector("ui_left","ui_right","ui_down","ui_up")

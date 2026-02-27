@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://dcr51e0astmvi"]
 
 [ext_resource type="Script" uid="uid://d104ykaaxal11" path="res://Scripts/hand.gd" id="1_f8146"]
+[ext_resource type="ArrayMesh" uid="uid://csrsxlobrkib1" path="res://Assets/Materials/Meshes/right_hand.res" id="2_vglrp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1wxba"]
+size = Vector3(1, 1, 0.45257568)
 
-[sub_resource type="BoxMesh" id="BoxMesh_pvwq0"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f8146"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_vglrp"]
 
 [node name="RightHand" type="RigidBody3D" unique_id=83433074]
 gravity_scale = 0.0
@@ -14,15 +14,15 @@ script = ExtResource("1_f8146")
 hand = "right"
 
 [node name="right_hand" type="CollisionShape3D" parent="." unique_id=2082743607]
-transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)
+transform = Transform3D(0.24999848, 0.0003236704, 0.0008110355, -0.00031981114, 0.24999696, -0.0011890017, -0.00081256503, 0.0011879569, 0.24999586, 0, 0, -0.01436615)
 shape = SubResource("BoxShape3D_1wxba")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="right_hand" unique_id=815246363]
-mesh = SubResource("BoxMesh_pvwq0")
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0.5130656, 0, 0)
+mesh = ExtResource("2_vglrp")
 
-[node name="HandSensor" type="Area3D" parent="." unique_id=291210277]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14543355)
+[node name="HandSensor" type="Area3D" parent="." unique_id=1838176956]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HandSensor" unique_id=420591572]
-transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, -0.100248575)
-shape = SubResource("BoxShape3D_f8146")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HandSensor" unique_id=566290919]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+shape = SubResource("SphereShape3D_vglrp")

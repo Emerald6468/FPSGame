@@ -11,40 +11,67 @@ enum hand_states{
 	retracting,
 	still,
 }
+var left_hand_state
+var right_hand_state
 var holdingon = false
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	match hand:
+		"left": left_hand_state = hand_states.extending
+		"right": right_hand_state = hand_states.extending
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	match hand:
 		"left":
-			
 			if !Global.left_arm_out: self.queue_free()
 			if Global.justclicked:
-				Global.justclicked = false;
-				linear_velocity = -linear_velocity
-				
+				match left_hand_state:
+					hand_states.extending:
+						left_hand_state = hand_states.retracting
+					hand_states.retracting:
+						left_hand_state = hand_states.extending
+					hand_states.still:
+						left_hand_state = hand_states.retracting
 			var left_sensor_list = hand_sensor.get_overlapping_bodies()
 			if hand_sensor.has_overlapping_bodies():
 				for body in left_sensor_list:
 					if body.is_in_group("Walls"):
-						print("TOUCHING WALL")
+						#print("TOUCHING WALL")
 						Global.left_extending = false
-						linear_velocity = -linear_velocity
+						left_hand_state = hand_states.retracting
+			move_hand(left_hand_state,hand)
 				
 		"right":
 			if !Global.right_arm_out: self.queue_free()
 			if Global.justclicked:
-				Global.justclicked = false;
-				linear_velocity = -linear_velocity
+				match right_hand_state:
+					hand_states.extending:
+						right_hand_state = hand_states.retracting
+					hand_states.retracting:
+						right_hand_state = hand_states.extending
+					hand_states.still:
+						right_hand_state = hand_states.retracting
 			var right_sensor_list = hand_sensor.get_overlapping_bodies()
 			if hand_sensor.has_overlapping_bodies():
 				for body in right_sensor_list:
-					if body.is_in_group("Walls") and Global.right_extending:
-						print("TOUCHING WALL")
+					if body.is_in_group("Walls"):
+						#print("TOUCHING WALL")
 						Global.right_extending = false
-						linear_velocity = -linear_velocity
+						right_hand_state = hand_states.retracting
+			move_hand(right_hand_state,hand)
+#movement
+func move_hand(hand_state,hand):
+	#if !Global.justclicked:
+	match hand_state:
+		hand_states.extending:
+			match hand:
+				"left": 
+					global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,.1)
+				"right": 
+					global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,.1)
+		hand_states.retracting:
+			global_transform.origin = global_transform.origin.move_toward(Global.player_point,.1)
+		hand_states.still:
+			pass

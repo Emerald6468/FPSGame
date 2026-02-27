@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://cu1pjwvnkjcvw"]
 
 [ext_resource type="PackedScene" uid="uid://dqsl2kwhkjohg" path="res://Assets/left hand.fbx" id="1_am3j0"]
+[ext_resource type="Material" uid="uid://ddq2gaq0fmgtv" path="res://Assets/Materials/left_hand.tres" id="2_b20qm"]
 
 [node name="left hand" unique_id=789046001 instance=ExtResource("1_am3j0")]
 transform = Transform3D(1987.782, 0, 0, 0, 1987.782, 0, 0, 0, 1987.782, 0, 0, 0)
+
+[node name="left_hand" parent="." index="0" unique_id=552656141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = ExtResource("2_b20qm")
