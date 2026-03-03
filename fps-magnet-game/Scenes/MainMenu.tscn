@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bf7afbx02ynv4"]
 
 [ext_resource type="Script" uid="uid://dc54delgpbw1r" path="res://Scripts/MainMenu.gd" id="1"]
+[ext_resource type="Theme" uid="uid://c7vkoq36pmyg4" path="res://Assets/Themes/main_theme.tres" id="2"]
 
 [node name="MainMenu" type="Control" unique_id=940262378]
 layout_mode = 3
@@ -9,58 +10,167 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("2")
 script = ExtResource("1")
 
 [node name="Background" type="ColorRect" parent="." unique_id=1085160409]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.12, 0.12, 0.15, 1)
+color = Color(0.18, 0.2, 0.24, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1939714442]
-layout_mode = 0
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1939714442]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 80
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=680883299]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=680883299]
 layout_mode = 2
+theme_override_constants/separation = 28
 
-[node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=879071341]
+[node name="TitlePanel" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=879071341]
+custom_minimum_size = Vector2(440, 88)
 layout_mode = 2
+theme_type_variation = &"TitlePanel"
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/TitlePanel" unique_id=879071342]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
 text = "Game Title"
 horizontal_alignment = 1
 
-[node name="Spacer" type="Control" parent="CenterContainer/VBoxContainer" unique_id=1008860890]
-custom_minimum_size = Vector2(0, 24)
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1008860890]
+custom_minimum_size = Vector2(0, 28)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1941373460]
-custom_minimum_size = Vector2(220, 40)
+[node name="StartRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1941373460]
 layout_mode = 2
-text = "Start"
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
-[node name="HelpButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=115535704]
-custom_minimum_size = Vector2(220, 40)
+[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer/StartRow" unique_id=1941373461]
+custom_minimum_size = Vector2(300, 56)
+layout_mode = 2
+text = "Start Game"
+
+[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/StartRow" unique_id=1941373463]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "✋"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/StartRow" unique_id=1941373462]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="OptionsRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1992105266]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer/OptionsRow" unique_id=1992105267]
+custom_minimum_size = Vector2(300, 56)
+layout_mode = 2
+text = "Options"
+
+[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/OptionsRow" unique_id=1992105269]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "✋"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/OptionsRow" unique_id=1992105268]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="HelpRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=115535704]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="HelpButton" type="Button" parent="MarginContainer/VBoxContainer/HelpRow" unique_id=115535705]
+custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Help"
 
-[node name="CreditsButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=377415494]
-custom_minimum_size = Vector2(220, 40)
+[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/HelpRow" unique_id=115535707]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(56, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "✋"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/HelpRow" unique_id=115535706]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="CreditsRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=377415494]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="CreditsButton" type="Button" parent="MarginContainer/VBoxContainer/CreditsRow" unique_id=377415495]
+custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Credits"
 
-[node name="ExitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1992105266]
-custom_minimum_size = Vector2(220, 40)
+[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/CreditsRow" unique_id=377415497]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(56, 56)
 layout_mode = 2
-text = "Exit"
+theme_override_font_sizes/font_size = 32
+text = "✋"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/CreditsRow" unique_id=377415496]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="PopupBackdrop" type="ColorRect" parent="." unique_id=1551662633]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
 
 [node name="HelpPopup" type="PanelContainer" parent="." unique_id=1551662634]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -74,15 +184,20 @@ grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="HelpPopup" unique_id=208212695]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="HelpTitle" type="Label" parent="HelpPopup/VBox" unique_id=1086038220]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 24
 text = "How To Play"
 horizontal_alignment = 1
 
 [node name="HelpText" type="Label" parent="HelpPopup/VBox" unique_id=2140262952]
 custom_minimum_size = Vector2(360, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.88, 0.9, 1)
+theme_override_font_sizes/font_size = 16
 text = "This is how you play the game"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -93,7 +208,8 @@ text = "Close"
 
 [node name="CreditsPopup" type="PanelContainer" parent="." unique_id=47735073]
 visible = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -107,15 +223,20 @@ grow_vertical = 2
 
 [node name="VBox" type="VBoxContainer" parent="CreditsPopup" unique_id=781942548]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="CreditsTitle" type="Label" parent="CreditsPopup/VBox" unique_id=250827388]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 24
 text = "Credits"
 horizontal_alignment = 1
 
 [node name="CreditsText" type="Label" parent="CreditsPopup/VBox" unique_id=1471837948]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.88, 0.9, 1)
+theme_override_font_sizes/font_size = 16
 text = "Josh
 Wes
 Zander
@@ -127,10 +248,3 @@ autowrap_mode = 2
 [node name="CreditsCloseBtn" type="Button" parent="CreditsPopup/VBox" unique_id=29843652]
 layout_mode = 2
 text = "Close"
-
-[connection signal="pressed" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/HelpButton" to="." method="_on_help_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/ExitButton" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="HelpPopup/VBox/HelpCloseBtn" to="." method="_on_help_close_pressed"]
-[connection signal="pressed" from="CreditsPopup/VBox/CreditsCloseBtn" to="." method="_on_credits_close_pressed"]

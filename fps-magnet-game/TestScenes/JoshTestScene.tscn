@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cr6vvme35gnmt"]
+[gd_scene format=3 uid="uid://cr6vvme35gnmt"]
 
-[ext_resource type="PackedScene" path="res://Scenes/PauseMenu.tscn" id="pause_menu"]
+[ext_resource type="PackedScene" uid="uid://c3cv48njgxap4" path="res://Prefabs/player.tscn" id="1_aaj0a"]
+[ext_resource type="PackedScene" uid="uid://r78fmtff3eqj" path="res://Scenes/PauseMenu.tscn" id="pause_menu"]
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
 albedo_color = Color(0.3, 0.3, 0.3, 1)
@@ -25,8 +26,8 @@ albedo_color = Color(0.2, 0.7, 0.3, 1)
 
 [node name="JoshTestScene" type="Node3D" unique_id=1588388336]
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1661582266]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 46)
+[node name="Player" parent="." unique_id=2443985 instance=ExtResource("1_aaj0a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2059486, 1.1737354, 44.340076)
 
 [node name="Floors" type="Node3D" parent="." unique_id=1103456144]
 
@@ -222,4 +223,4 @@ use_collision = true
 size = Vector3(19, 1.5, 0.3)
 material = SubResource("mat_killwall")
 
-[node name="PauseMenu" parent="." instance=ExtResource("pause_menu")]
+[node name="PauseMenu" parent="." unique_id=1940906282 instance=ExtResource("pause_menu")]
