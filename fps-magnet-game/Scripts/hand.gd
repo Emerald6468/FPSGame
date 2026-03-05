@@ -2,7 +2,7 @@ class_name Hand
 extends RigidBody3D
 
 @export var hand = "left"
-@export var Hand_Speed = .2
+@export var Hand_Speed = .175
 @onready var hand_sensor: Area3D = $HandSensor
 var just_touched = false
 
