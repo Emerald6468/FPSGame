@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dcr51e0astmvi"]
 
 [ext_resource type="Script" uid="uid://d104ykaaxal11" path="res://Scripts/hand.gd" id="1_f8146"]
-[ext_resource type="ArrayMesh" uid="uid://csrsxlobrkib1" path="res://Assets/Materials/Meshes/right_hand.res" id="2_vglrp"]
+[ext_resource type="ArrayMesh" uid="uid://b6xcj5d8o23ek" path="res://Assets/Materials/Meshes/right_hand.res" id="2_vglrp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1wxba"]
 size = Vector3(1, 1, 0.45257568)

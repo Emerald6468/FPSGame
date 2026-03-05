@@ -2,6 +2,7 @@ class_name Hand
 extends RigidBody3D
 
 @export var hand = "left"
+@export var Hand_Speed = .2
 @onready var hand_sensor: Area3D = $HandSensor
 var just_touched = false
 
@@ -23,10 +24,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Global.left_extending: left_hand_state = hand_states.extending
+	if Global.right_extending: right_hand_state = hand_states.extending
 	match hand:
 		"left":
-			if !Global.left_arm_out: self.queue_free()
-			if Global.justclicked:
+			if !Global.left_arm_out: 
+				print("removed left")
+				self.queue_free()
+			if Global.justclicked and Global.leftclicked:
+				print("switching")
 				match left_hand_state:
 					hand_states.extending:
 						left_hand_state = hand_states.retracting
@@ -38,14 +44,16 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in left_sensor_list:
 					if body.is_in_group("Walls"):
-						#print("TOUCHING WALL")
+						print("TOUCHING WALL")
 						Global.left_extending = false
 						left_hand_state = hand_states.retracting
 			move_hand(left_hand_state,hand)
-				
+		
 		"right":
-			if !Global.right_arm_out: self.queue_free()
-			if Global.justclicked:
+			if !Global.right_arm_out: 
+				print("removed right")
+				self.queue_free()
+			if Global.justclicked and !Global.leftclicked:
 				match right_hand_state:
 					hand_states.extending:
 						right_hand_state = hand_states.retracting
@@ -61,17 +69,31 @@ func _process(delta: float) -> void:
 						Global.right_extending = false
 						right_hand_state = hand_states.retracting
 			move_hand(right_hand_state,hand)
+	
+	
+	if Global.justclicked:
+		print("turning off")
+		Global.justclicked = false;
+	
 #movement
 func move_hand(hand_state,hand):
 	#if !Global.justclicked:
 	match hand_state:
 		hand_states.extending:
+			print("extending")
 			match hand:
 				"left": 
-					global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,.1)
+					look_at(Global.left_raycast_point)
+					if global_position.distance_to(Global.left_raycast_point) < 3: 
+						left_hand_state = hand_states.retracting
+					else: global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,Hand_Speed)
 				"right": 
-					global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,.1)
+					look_at(Global.right_raycast_point)
+					if global_position.distance_to(Global.right_raycast_point) < 3: 
+						right_hand_state = hand_states.retracting
+					else:global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,Hand_Speed)
 		hand_states.retracting:
-			global_transform.origin = global_transform.origin.move_toward(Global.player_point,.1)
+			print("retracting")
+			global_transform.origin = global_transform.origin.move_toward(Global.player_point,Hand_Speed)
 		hand_states.still:
 			pass

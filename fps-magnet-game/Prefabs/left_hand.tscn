@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bh5pcdl73hmjt"]
 
 [ext_resource type="Script" uid="uid://d104ykaaxal11" path="res://Scripts/hand.gd" id="1_gxqsq"]
-[ext_resource type="ArrayMesh" uid="uid://difb2pgv023o3" path="res://Assets/Materials/Meshes/left_hand.res" id="2_1wxba"]
+[ext_resource type="ArrayMesh" uid="uid://cyjb1gv3n10ib" path="res://Assets/Materials/Meshes/left_hand.res" id="2_1wxba"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1wxba"]
 

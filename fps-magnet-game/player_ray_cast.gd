@@ -1,6 +1,8 @@
 extends RayCast3D
 
 @onready var debug_scene = preload("res://Prefabs/Debug.tscn")
+@onready var farthest_point: Marker3D = $FarthestPoint
+
 var debug_created = false
 var collision_point: Vector3
 var target_point: Vector3
@@ -12,20 +14,28 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if is_colliding(): create_point()
-	else: 
-		target_point = get_target_position()
-		match Global.leftclicked:
-			true: if Global.justclicked and !Global.left_extending: Global.left_raycast_point = target_point
-			false: if Global.justclicked and !Global.right_extending: Global.right_raycast_point = target_point
-		if Global.justclicked: Global.collider_point = target_point
+	if Global.justclicked:
+		if is_colliding(): create_point()
+		else: 
+			target_point = farthest_point.global_position
+			match Global.leftclicked:
+				true: if !Global.left_extending or !Global.left_arm_out: 
+					Global.left_raycast_point = target_point
+					print("target point " + str(Global.left_raycast_point))
+				false: if !Global.right_extending or !Global.right_arm_out: 
+					Global.right_raycast_point = target_point
+	
 
 
 func create_point():
 	collision_point = get_collision_point()
+	print("made it through")
 	match Global.leftclicked:
-		true: if Global.justclicked and !Global.left_extending: Global.left_raycast_point = collision_point
-		false: if Global.justclicked and !Global.right_extending: Global.right_raycast_point = collision_point
+		true: if !Global.left_extending or !Global.left_arm_out:
+			Global.left_raycast_point = collision_point
+			print("collision point " + str(Global.left_raycast_point))
+		false: if !Global.right_extending or !Global.right_arm_out: 
+			Global.right_raycast_point = collision_point
 	create_debug()
 
 func create_debug():
