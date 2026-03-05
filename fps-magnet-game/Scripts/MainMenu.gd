@@ -1,9 +1,12 @@
 extends Control
 
-const HAND_EMOJI := "✋"
 const HOVER_FADE_DURATION := 0.2
 const PULL_ANIMATION_DURATION := 0.4
 const PULL_DISTANCE := 200.0
+const BOB_AMPLITUDE := 0.18
+const BOB_SPEED := 3.0
+const HAND_GAP := 16.0
+const HAND_SIZE := 120.0
 
 
 @onready var margin_container: MarginContainer = $MarginContainer
@@ -13,10 +16,12 @@ const PULL_DISTANCE := 200.0
 @onready var credits_popup: Control = $CreditsPopup
 @onready var help_close_btn: Button = $HelpPopup/VBox/HelpCloseBtn
 @onready var credits_close_btn: Button = $CreditsPopup/VBox/CreditsCloseBtn
+@onready var hand_view: SubViewportContainer = $HandView
 
 var _row_data: Dictionary = {}
 var _current_focused_row: String = ""
 var _is_animating: bool = false
+var _hand_mesh: MeshInstance3D = null
 
 
 func _ready() -> void:
@@ -45,24 +50,23 @@ func _unhandled_input(event: InputEvent) -> void:
 # Setup 
 
 func _setup_menu_rows() -> void:
+	hand_view.modulate.a = 0.0
+	var vp := hand_view.get_node_or_null("HandViewport") as SubViewport
+	if vp:
+		_hand_mesh = vp.get_node_or_null("HandMesh") as MeshInstance3D
+	
 	for row in vbox_container.get_children():
 		if not row is HBoxContainer:
 			continue
 			
 		var row_name: String = row.name.trim_suffix("Row").to_lower()
-		var arm: Control = row.get_node_or_null("ArmRect")
-		var hand: Label = row.get_node_or_null("HandLabel")
 		var button: Button = row.get_node_or_null(row.name.replace("Row", "Button"))
 		
-		if arm and hand and button:
-			hand.text = HAND_EMOJI
-			arm.modulate.a = 0.0
-			hand.modulate.a = 0.0
-			
-			_row_data[row_name] = {"row": row, "arm": arm, "hand": hand, "button": button}
+		if button:
+			_row_data[row_name] = {"row": row, "button": button}
 
 			button.focus_entered.connect(_on_row_focused.bind(row_name))
-			button.mouse_entered.connect(button.grab_focus) # Mouse hovering forces keyboard focus
+			button.mouse_entered.connect(button.grab_focus)
 			button.pressed.connect(_on_row_pressed.bind(row_name))
 
 
@@ -78,19 +82,29 @@ func _focus_first_button() -> void:
 
 # Input Logic
 
+func _process(_delta: float) -> void:
+	if _current_focused_row == "" or _is_animating or not _row_data.has(_current_focused_row):
+		return
+	if not margin_container.visible:
+		return
+	
+	var button: Control = _row_data[_current_focused_row].button
+	var t := Time.get_ticks_msec() * 0.001
+	var bob := sin(t * BOB_SPEED) * BOB_AMPLITUDE * 40.0 # convert 3D units to pixels
+	
+	hand_view.size = Vector2(HAND_SIZE, HAND_SIZE)
+	hand_view.position = Vector2(
+		button.global_position.x + button.size.x + HAND_GAP,
+		button.global_position.y + (button.size.y - HAND_SIZE) * 0.5 + bob
+	)
+
+
 func _on_row_focused(row_name: String) -> void:
 	if _is_animating:
 		return
-		
-	# Fade out
-	if _current_focused_row != "" and _current_focused_row != row_name:
-		var prev = _row_data[_current_focused_row]
-		_fade_arm_and_hand(prev.arm, prev.hand, 0.0)
-		
-	# Fade in
+	
 	_current_focused_row = row_name
-	var current = _row_data[row_name]
-	_fade_arm_and_hand(current.arm, current.hand, 1.0)
+	_fade_hand(1.0)
 
 
 func _on_row_pressed(row_name: String) -> void:
@@ -100,7 +114,7 @@ func _on_row_pressed(row_name: String) -> void:
 	match row_name:
 		"start":
 			await _play_pull_animation("start")
-			get_tree().change_scene_to_file("res://TestScenes/JoshTestScene.tscn")
+			get_tree().change_scene_to_file("res://Scenes/Level_1.tscn")
 		"options":
 			await _play_pull_animation("options")
 			# add options scene when I get around it it 
@@ -114,70 +128,48 @@ func _on_row_pressed(row_name: String) -> void:
 
 # Animation 
 
-func _fade_arm_and_hand(arm: Control, hand: Control, target_alpha: float) -> void:
+func _fade_hand(target_alpha: float) -> void:
 	var tween := create_tween()
-	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD).set_parallel(true)
-	tween.tween_property(arm, "modulate:a", target_alpha, HOVER_FADE_DURATION)
-	tween.tween_property(hand, "modulate:a", target_alpha, HOVER_FADE_DURATION)
+	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(hand_view, "modulate:a", target_alpha, HOVER_FADE_DURATION)
 
 
 func _play_pull_animation(row_name: String) -> void:
 	if not _row_data.has(row_name): return
 	
-	_is_animating = true # Lock interactions 
+	_is_animating = true
 	
 	var d: Dictionary = _row_data[row_name]
 	var row: HBoxContainer = d.row
 	var button: Control = d.button
-	var arm: Control = d.arm
-	var hand: Control = d.hand
 
-	_fade_arm_and_hand(arm, hand, 1.0)
+	hand_view.modulate.a = 1.0
 
-	#  save 4 later
 	var btn_size := button.size
-	var hand_size := hand.size
-	var arm_size := arm.size
 	var btn_global := button.global_position
-	var hand_global := hand.global_position
-	var arm_global := arm.global_position
 
-	var placeholders: Array[Control] = [
-		_make_placeholder(btn_size), 
-		_make_placeholder(hand_size), 
-		_make_placeholder(arm_size)
-	]
-	
-	for i in placeholders.size():
-		row.add_child(placeholders[i])
-		row.move_child(placeholders[i], i)
+	var placeholder := _make_placeholder(btn_size)
+	row.add_child(placeholder)
+	row.move_child(placeholder, 0)
 
-	# Reparent 
-	for node in [button, hand, arm]:
-		row.remove_child(node)
-		add_child(node)
-		
+	row.remove_child(button)
+	add_child(button)
 	button.global_position = btn_global
-	hand.global_position = hand_global
-	arm.global_position = arm_global
-	
-	# Sizes must be manually reapplied
 	button.size = btn_size
-	hand.size = hand_size
-	arm.size = arm_size
 
 	var move_right := Vector2(PULL_DISTANCE, 0)
 	var tween := create_tween()
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK).set_parallel(true)
-	
 	tween.tween_property(button, "position", button.position + move_right, PULL_ANIMATION_DURATION)
-	tween.tween_property(hand, "position", hand.position + move_right, PULL_ANIMATION_DURATION)
-	tween.tween_property(arm, "position", arm.position + move_right, PULL_ANIMATION_DURATION)
-	tween.tween_property(arm, "size:x", maxf(0.0, arm.size.x - PULL_DISTANCE), PULL_ANIMATION_DURATION)
-	
+	tween.tween_property(hand_view, "position", hand_view.position + move_right, PULL_ANIMATION_DURATION)
+
 	await tween.finished
 
-	_restore_row(row, button, hand, arm, placeholders)
+	remove_child(button)
+	row.remove_child(placeholder)
+	placeholder.queue_free()
+	row.add_child(button)
+	row.move_child(button, 0)
 	_is_animating = false
 
 
@@ -188,26 +180,10 @@ func _make_placeholder(min_size: Vector2) -> Control:
 	return c
 
 
-func _restore_row(row: HBoxContainer, button: Control, hand: Control, arm: Control, placeholders: Array[Control]) -> void:
-	for node in [button, hand, arm]:
-		remove_child(node)
-		
-	for ph in placeholders:
-		row.remove_child(ph)
-		ph.queue_free()
-		
-	row.add_child(button)
-	row.add_child(hand)
-	row.add_child(arm)
-	
-	row.move_child(button, 0)
-	row.move_child(hand, 1)
-	row.move_child(arm, 2)
-
-
 # Popups
 
 func _open_popup(popup: Control, focus_target: Control) -> void:
+	hand_view.hide()
 	margin_container.hide()
 	popup_backdrop.show()
 	popup.show()
@@ -218,4 +194,5 @@ func _close_popup(popup: Control) -> void:
 	popup.hide()
 	popup_backdrop.hide()
 	margin_container.show()
+	hand_view.show()
 	_focus_first_button()

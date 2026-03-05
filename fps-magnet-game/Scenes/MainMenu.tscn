@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dc54delgpbw1r" path="res://Scripts/MainMenu.gd" id="1"]
 [ext_resource type="Theme" uid="uid://c7vkoq36pmyg4" path="res://Assets/Themes/main_theme.tres" id="2"]
+[ext_resource type="ArrayMesh" uid="uid://cyjb1gv3n10ib" path="res://Assets/Materials/Meshes/left_hand.res" id="3_ghw46"]
 
 [node name="MainMenu" type="Control" unique_id=940262378]
 layout_mode = 3
@@ -63,22 +64,6 @@ custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Start Game"
 
-[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/StartRow" unique_id=1941373463]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "✋"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/StartRow" unique_id=1941373462]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
 [node name="OptionsRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1992105266]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -88,22 +73,6 @@ theme_override_constants/separation = 0
 custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Options"
-
-[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/OptionsRow" unique_id=1992105269]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "✋"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/OptionsRow" unique_id=1992105268]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
 
 [node name="HelpRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=115535704]
 layout_mode = 2
@@ -115,22 +84,6 @@ custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Help"
 
-[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/HelpRow" unique_id=115535707]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "✋"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/HelpRow" unique_id=115535706]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-
 [node name="CreditsRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=377415494]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -141,21 +94,32 @@ custom_minimum_size = Vector2(300, 56)
 layout_mode = 2
 text = "Credits"
 
-[node name="HandLabel" type="Label" parent="MarginContainer/VBoxContainer/CreditsRow" unique_id=377415497]
+[node name="HandView" type="SubViewportContainer" parent="." unique_id=3001]
 modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(56, 56)
-layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "✋"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ArmRect" type="ColorRect" parent="MarginContainer/VBoxContainer/CreditsRow" unique_id=377415496]
-modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(0, 56)
-layout_mode = 2
-size_flags_horizontal = 3
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 0
 mouse_filter = 2
+stretch = true
+
+[node name="HandViewport" type="SubViewport" parent="HandView" unique_id=3002]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(64, 64)
+render_target_update_mode = 4
+
+[node name="OmniLight3D" type="OmniLight3D" parent="HandView/HandViewport" unique_id=3003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7424445, 1, 1.5)
+light_energy = 5.889
+omni_range = 8.0
+
+[node name="Camera3D" type="Camera3D" parent="HandView/HandViewport" unique_id=3004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 2)
+projection = 1
+size = 1.6
+
+[node name="HandMesh" type="MeshInstance3D" parent="HandView/HandViewport" unique_id=3005]
+transform = Transform3D(26.953024, 0, -13.173245, 0, 29.999994, 0, 13.173245, 0, 26.953024, -0.2595457, 0, 0.2586702)
+mesh = ExtResource("3_ghw46")
 
 [node name="PopupBackdrop" type="ColorRect" parent="." unique_id=1551662633]
 visible = false
