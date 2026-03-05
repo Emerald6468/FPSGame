@@ -84,12 +84,12 @@ func move_hand(hand_state,hand):
 			match hand:
 				"left": 
 					look_at(Global.left_raycast_point)
-					if global_position.distance_to(Global.left_raycast_point) < 3: 
+					if global_position.distance_to(Global.left_raycast_point) < .2: 
 						left_hand_state = hand_states.retracting
 					else: global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,Hand_Speed)
 				"right": 
 					look_at(Global.right_raycast_point)
-					if global_position.distance_to(Global.right_raycast_point) < 3: 
+					if global_position.distance_to(Global.right_raycast_point) < .2: 
 						right_hand_state = hand_states.retracting
 					else:global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,Hand_Speed)
 		hand_states.retracting:
