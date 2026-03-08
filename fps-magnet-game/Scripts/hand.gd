@@ -26,7 +26,7 @@ func _process(delta: float) -> void:
 	match hand:
 		"left":
 			if !Global.left_arm_out: self.queue_free()
-			if Global.justclicked:
+			if Global.justclicked and Global.leftclicked:
 				match left_hand_state:
 					hand_states.extending:
 						left_hand_state = hand_states.retracting
@@ -45,7 +45,7 @@ func _process(delta: float) -> void:
 				
 		"right":
 			if !Global.right_arm_out: self.queue_free()
-			if Global.justclicked:
+			if Global.justclicked and !Global.leftclicked:
 				match right_hand_state:
 					hand_states.extending:
 						right_hand_state = hand_states.retracting
@@ -61,6 +61,7 @@ func _process(delta: float) -> void:
 						Global.right_extending = false
 						right_hand_state = hand_states.retracting
 			move_hand(right_hand_state,hand)
+
 #movement
 func move_hand(hand_state,hand):
 	#if !Global.justclicked:

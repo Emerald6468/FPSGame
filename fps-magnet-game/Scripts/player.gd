@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @export_category("Controls")
 @export var SPEED = 10.0
+var  current_speed = SPEED
 @export var JUMP_VELOCITY = 4.5
 
 var look_dir:Vector2
@@ -40,21 +41,19 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	if !left_arm_out and !right_arm_out:
-		var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
-		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-		if direction:
-			velocity.x = direction.x * SPEED
-			velocity.z = direction.z * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-			velocity.z = move_toward(velocity.z, 0, SPEED)
-			
+	#MOVEMENT
+	if !left_arm_out and !right_arm_out: current_speed = SPEED
+	else: current_speed = 2.0
+	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
+	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	if direction:
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
 	else:
-		Global.player_point = self.global_position
-		velocity.x = 0
-		velocity.z = 0
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
+	Global.player_point = self.global_position
+
 	
 	
 	#checks to see if it needs to delete hands
