@@ -77,23 +77,23 @@ func _process(delta: float) -> void:
 	
 #movement
 func move_hand(hand_state,hand):
-	#if !Global.justclicked:
-	match hand_state:
-		hand_states.extending:
-			print("extending")
-			match hand:
-				"left": 
-					look_at(Global.left_raycast_point)
-					if global_position.distance_to(Global.left_raycast_point) < .2: 
-						left_hand_state = hand_states.retracting
-					else: global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,Hand_Speed)
-				"right": 
-					look_at(Global.right_raycast_point)
-					if global_position.distance_to(Global.right_raycast_point) < .2: 
-						right_hand_state = hand_states.retracting
-					else:global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,Hand_Speed)
-		hand_states.retracting:
-			print("retracting")
-			global_transform.origin = global_transform.origin.move_toward(Global.player_point,Hand_Speed)
-		hand_states.still:
-			pass
+	if !Global.justclicked:
+		match hand_state:
+			hand_states.extending:
+				print("extending")
+				match hand:
+					"left": 
+						look_at(Global.left_raycast_point)
+						if global_position.distance_to(Global.left_raycast_point) < .2: 
+							left_hand_state = hand_states.retracting
+						else: global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,Hand_Speed)
+					"right": 
+						look_at(Global.right_raycast_point)
+						if global_position.distance_to(Global.right_raycast_point) < .2: 
+							right_hand_state = hand_states.retracting
+						else:global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,Hand_Speed)
+			hand_states.retracting:
+				print("retracting")
+				global_transform.origin = global_transform.origin.move_toward(Global.player_point,Hand_Speed)
+			hand_states.still:
+				pass

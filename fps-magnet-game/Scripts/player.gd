@@ -21,6 +21,7 @@ var dont_check = false
 @onready var left_hand_scene = preload("res://Prefabs/left_hand.tscn")
 @onready var right_hand_scene = preload("res://Prefabs/right_hand.tscn")
 
+@export var player_ray_cast: RayCast3D
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -82,14 +83,18 @@ func left_clicked():
 	Global.left_extending = !Global.left_extending
 	Global.justclicked = true;
 	print("clicked left")
-	if !Global.left_arm_out: spawn_lefthand()
+	player_ray_cast.clicked()
+	if !Global.left_arm_out: call_deferred("spawn_lefthand")
+	set_deferred("Global.just_clicked", false)
 
 func right_clicked():
 	Global.leftclicked = false
 	Global.right_extending = !Global.right_extending
 	Global.justclicked = true;
 	print("clicked right")
-	if !Global.right_arm_out: spawn_righthand()
+	player_ray_cast.clicked()
+	if !Global.right_arm_out: call_deferred("spawn_righthand")
+	set_deferred("Global.just_clicked", false)
 	
 func spawn_lefthand():
 	Global.left_arm_out = true
@@ -98,7 +103,6 @@ func spawn_lefthand():
 	add_sibling(left_hand)
 	left_hand.transform = left_spawn_point.global_transform
 	dont_check = false
-	#left_hand.linear_velocity = left_spawn_point.global_transform.basis.z * -1 * handspeed
 
 func spawn_righthand():
 	Global.right_arm_out = true
@@ -108,7 +112,6 @@ func spawn_righthand():
 	add_sibling(right_hand)
 	right_hand.transform = right_spawn_point.global_transform
 	dont_check = false
-	#right_hand.linear_velocity = right_spawn_point.global_transform.basis.z * -1 * handspeed
 
 func _rotate_camera(delta: float, sens_mod: float = 1.0):
 	var input := Input.get_vector("ui_left","ui_right","ui_down","ui_up")

@@ -14,27 +14,30 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.justclicked:
-		if is_colliding(): create_point()
-		else: 
-			target_point = farthest_point.global_position
-			match Global.leftclicked:
-				true: if !Global.left_extending or !Global.left_arm_out: 
-					Global.left_raycast_point = target_point
-					print("target point " + str(Global.left_raycast_point))
-				false: if !Global.right_extending or !Global.right_arm_out: 
-					Global.right_raycast_point = target_point
+	pass
+		
 	
 
+func clicked():
+	if is_colliding(): create_point()
+	else: 
+		target_point = farthest_point.global_position
+		match Global.leftclicked:
+			true: if !Global.left_arm_out: 
+				Global.left_raycast_point = target_point
+				print("target point " + str(Global.left_raycast_point))
+			false: if !Global.right_arm_out: 
+				Global.right_raycast_point = target_point
 
 func create_point():
 	collision_point = get_collision_point()
 	print("made it through")
 	match Global.leftclicked:
-		true: if !Global.left_extending or !Global.left_arm_out:
+		true: if !Global.left_arm_out:
+			print("test click")
 			Global.left_raycast_point = collision_point
 			print("collision point " + str(Global.left_raycast_point))
-		false: if !Global.right_extending or !Global.right_arm_out: 
+		false: if !Global.right_arm_out: 
 			Global.right_raycast_point = collision_point
 	create_debug()
 

@@ -9,9 +9,10 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5wxv7"]
 
-[node name="Player" type="CharacterBody3D" unique_id=2443985]
+[node name="Player" type="CharacterBody3D" unique_id=2443985 node_paths=PackedStringArray("player_ray_cast")]
 script = ExtResource("1_y6xdh")
 camera_sens = 20
+player_ray_cast = NodePath("Camera3D/PlayerRayCast")
 
 [node name="body" type="CollisionShape3D" parent="." unique_id=2097978217]
 shape = SubResource("CapsuleShape3D_l8m6k")
