@@ -61,9 +61,11 @@ func _physics_process(delta: float) -> void:
 				var hand : Hand = body
 				if hand.hand == "left":
 					hand.queue_free()
+					Global.left_holding_on = false
 					Global.left_arm_out = false
 				if hand.hand == "right":
 					hand.queue_free()
+					Global.right_holding_on = false
 					Global.right_arm_out = false
 	_rotate_camera(delta)
 	move_and_slide()

@@ -14,10 +14,11 @@ enum hand_states{
 }
 var left_hand_state
 var right_hand_state
-var holdingon = false
+
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.hand_speed = Hand_Speed
 	match hand:
 		"left": left_hand_state = hand_states.extending
 		"right": right_hand_state = hand_states.extending
@@ -31,6 +32,8 @@ func _process(delta: float) -> void:
 			if !Global.left_arm_out: 
 				self.queue_free()
 			if Global.justclicked and Global.leftclicked:
+				if Global.left_holding_on: 
+					Global.left_holding_on = false
 				match left_hand_state:
 					hand_states.extending:
 						left_hand_state = hand_states.retracting
@@ -44,6 +47,14 @@ func _process(delta: float) -> void:
 					if body.is_in_group("Walls"):
 						Global.left_extending = false
 						left_hand_state = hand_states.retracting
+					elif body.is_in_group("Grabbable") and !Global.left_holding_on:
+						if left_hand_state == hand_states.extending:
+							body.set_touched(true)
+							Global.left_holding_on = true
+							Global.left_extending = false
+							left_hand_state = hand_states.retracting
+						elif left_hand_state == hand_states.retracting:
+							body.set_touched(false)
 			move_hand(left_hand_state,hand)
 		
 		"right":
@@ -61,6 +72,11 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in right_sensor_list:
 					if body.is_in_group("Walls"):
+						Global.right_extending = false
+						right_hand_state = hand_states.retracting
+					elif body.is_in_group("Grabbable") and !Global.right_holding_on:
+						body.set_touched(true)
+						Global.right_holding_on = true
 						Global.right_extending = false
 						right_hand_state = hand_states.retracting
 			move_hand(right_hand_state,hand)

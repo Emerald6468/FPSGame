@@ -14,3 +14,7 @@ var left_farthest_point: Vector3
 
 var right_raycast_point: Vector3
 var right_farthest_point: Vector3
+
+var hand_speed = 0.0
+var left_holding_on = false
+var right_holding_on = false
