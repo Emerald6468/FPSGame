@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export_category("Controls")
 @export var SPEED = 10.0
-var  current_speed = SPEED
+var current_speed = SPEED
 @export var JUMP_VELOCITY = 4.5
 
 #camera
@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("test_right"):right_clicked()
 	# Get the input direction and handle the movement/deceleration.
 	#MOVEMENT
-	if !left_arm_out and !right_arm_out: current_speed = SPEED
+	if !Global.left_arm_out and !Global.right_arm_out: current_speed = SPEED
 	else: current_speed = 2.0
 	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
