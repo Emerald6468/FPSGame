@@ -82,7 +82,6 @@ func left_clicked():
 	Global.leftclicked = true
 	Global.left_extending = !Global.left_extending
 	Global.justclicked = true;
-	print("clicked left")
 	player_ray_cast.clicked()
 	if !Global.left_arm_out: call_deferred("spawn_lefthand")
 	set_deferred("Global.just_clicked", false)
@@ -91,7 +90,6 @@ func right_clicked():
 	Global.leftclicked = false
 	Global.right_extending = !Global.right_extending
 	Global.justclicked = true;
-	print("clicked right")
 	player_ray_cast.clicked()
 	if !Global.right_arm_out: call_deferred("spawn_righthand")
 	set_deferred("Global.just_clicked", false)

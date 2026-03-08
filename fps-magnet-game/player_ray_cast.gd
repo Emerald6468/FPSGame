@@ -9,7 +9,8 @@ var target_point: Vector3
 var debug_obj
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	create_debug()
+	pass
+	#create_debug()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,21 +26,17 @@ func clicked():
 		match Global.leftclicked:
 			true: if !Global.left_arm_out: 
 				Global.left_raycast_point = target_point
-				print("target point " + str(Global.left_raycast_point))
 			false: if !Global.right_arm_out: 
 				Global.right_raycast_point = target_point
 
 func create_point():
 	collision_point = get_collision_point()
-	print("made it through")
 	match Global.leftclicked:
 		true: if !Global.left_arm_out:
-			print("test click")
 			Global.left_raycast_point = collision_point
-			print("collision point " + str(Global.left_raycast_point))
 		false: if !Global.right_arm_out: 
 			Global.right_raycast_point = collision_point
-	create_debug()
+	#create_debug()
 
 func create_debug():
 	if !debug_created:

@@ -29,10 +29,8 @@ func _process(delta: float) -> void:
 	match hand:
 		"left":
 			if !Global.left_arm_out: 
-				print("removed left")
 				self.queue_free()
 			if Global.justclicked and Global.leftclicked:
-				print("switching")
 				match left_hand_state:
 					hand_states.extending:
 						left_hand_state = hand_states.retracting
@@ -44,14 +42,12 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in left_sensor_list:
 					if body.is_in_group("Walls"):
-						print("TOUCHING WALL")
 						Global.left_extending = false
 						left_hand_state = hand_states.retracting
 			move_hand(left_hand_state,hand)
 		
 		"right":
 			if !Global.right_arm_out: 
-				print("removed right")
 				self.queue_free()
 			if Global.justclicked and !Global.leftclicked:
 				match right_hand_state:
@@ -65,14 +61,12 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in right_sensor_list:
 					if body.is_in_group("Walls"):
-						#print("TOUCHING WALL")
 						Global.right_extending = false
 						right_hand_state = hand_states.retracting
 			move_hand(right_hand_state,hand)
 	
 	
 	if Global.justclicked:
-		print("turning off")
 		Global.justclicked = false;
 	
 #movement
@@ -80,7 +74,7 @@ func move_hand(hand_state,hand):
 	if !Global.justclicked:
 		match hand_state:
 			hand_states.extending:
-				print("extending")
+				#print("extending")
 				match hand:
 					"left": 
 						look_at(Global.left_raycast_point)
@@ -93,7 +87,7 @@ func move_hand(hand_state,hand):
 							right_hand_state = hand_states.retracting
 						else:global_transform.origin = global_transform.origin.move_toward(Global.right_raycast_point,Hand_Speed)
 			hand_states.retracting:
-				print("retracting")
+				#print("retracting")
 				global_transform.origin = global_transform.origin.move_toward(Global.player_point,Hand_Speed)
 			hand_states.still:
 				pass
