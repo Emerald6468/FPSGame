@@ -53,10 +53,15 @@ text = "Resume"
 layout_mode = 2
 text = "Main Menu"
 
+[node name="Reload" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=313519213]
+layout_mode = 2
+text = "Reload"
+
 [node name="ExitButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1644323034]
 layout_mode = 2
 text = "Exit"
 
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/MenuButton" to="." method="_on_menu_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/Reload" to="." method="_on_reload_pressed"]
 [connection signal="pressed" from="CenterContainer/PanelContainer/VBoxContainer/ExitButton" to="." method="_on_exit_pressed"]
