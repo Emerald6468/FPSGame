@@ -31,13 +31,8 @@ albedo_color = Color(0.6104941, 0.00031025082, 0.62003845, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_vsw3f"]
 material = SubResource("StandardMaterial3D_gxa7t")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_l8m6k"]
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qm7o4"]
-albedo_color = Color(1, 1, 0.36078432, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_gxa7t"]
-material = SubResource("StandardMaterial3D_qm7o4")
+albedo_color = Color(1, 0.56078434, 0.42745098, 1)
 
 [node name="ZanderTestScene" type="Node3D" unique_id=1642821376]
 
@@ -90,12 +85,8 @@ mesh = SubResource("BoxMesh_vsw3f")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=891367659]
 transform = Transform3D(1, 0, 0, 0, 0.76773584, 0.64076656, 0, -0.64076656, 0.76773584, 0, 92.5474, 55.527084)
 
-[node name="MoveableCube" type="RigidBody3D" parent="." unique_id=1066039792 groups=["Grabbable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.499532, 13.687352)
+[node name="MoveableCube" type="CSGBox3D" parent="." unique_id=891037394 groups=["Grabbable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.51904106, 13.687352)
+use_collision = true
+material = SubResource("StandardMaterial3D_qm7o4")
 script = ExtResource("3_qm7o4")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MoveableCube" unique_id=904836198]
-shape = SubResource("BoxShape3D_l8m6k")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MoveableCube/CollisionShape3D" unique_id=1923664968]
-mesh = SubResource("BoxMesh_gxa7t")

@@ -22,6 +22,8 @@ var dont_check = false
 @onready var right_hand_scene = preload("res://Prefabs/right_hand.tscn")
 
 @export var player_ray_cast: RayCast3D
+@onready var farthest_point: Marker3D = $FarthestPoint
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -48,6 +50,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, current_speed)
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 	Global.player_point = self.global_position
+	
 
 	
 	
@@ -85,6 +88,7 @@ func left_clicked():
 	Global.left_extending = !Global.left_extending
 	Global.justclicked = true;
 	player_ray_cast.clicked()
+	Global.left_farthest_point = farthest_point.global_position
 	if !Global.left_arm_out: call_deferred("spawn_lefthand")
 	set_deferred("Global.just_clicked", false)
 
@@ -93,6 +97,7 @@ func right_clicked():
 	Global.right_extending = !Global.right_extending
 	Global.justclicked = true;
 	player_ray_cast.clicked()
+	Global.right_farthest_point = farthest_point.global_position
 	if !Global.right_arm_out: call_deferred("spawn_righthand")
 	set_deferred("Global.just_clicked", false)
 	

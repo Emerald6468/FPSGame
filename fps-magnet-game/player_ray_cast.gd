@@ -1,7 +1,8 @@
 extends RayCast3D
 
 @onready var debug_scene = preload("res://Prefabs/Debug.tscn")
-@onready var farthest_point: Marker3D = $FarthestPoint
+@onready var end_point: Marker3D = %EndPoint
+#@onready var farthest_point: Marker3D = %FarthestPoint
 
 var debug_created = false
 var collision_point: Vector3
@@ -22,7 +23,7 @@ func _process(delta: float) -> void:
 func clicked():
 	if is_colliding(): create_point()
 	else: 
-		target_point = farthest_point.global_position
+		target_point = end_point.global_position
 		match Global.leftclicked:
 			true: 
 				if !Global.left_arm_out:
