@@ -11,9 +11,11 @@ var player_point: Vector3
 
 var left_raycast_point: Vector3
 var left_farthest_point: Vector3
+var left_collision = false
 
 var right_raycast_point: Vector3
 var right_farthest_point: Vector3
+var right_collision = false
 
 var hand_speed = 0.0
 var left_holding_on = false

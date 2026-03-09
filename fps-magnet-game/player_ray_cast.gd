@@ -24,17 +24,23 @@ func clicked():
 	else: 
 		target_point = farthest_point.global_position
 		match Global.leftclicked:
-			true: if !Global.left_arm_out: 
-				Global.left_raycast_point = target_point
-			false: if !Global.right_arm_out: 
-				Global.right_raycast_point = target_point
+			true: 
+				if !Global.left_arm_out:
+					Global.left_collision = false 
+					Global.left_raycast_point = target_point
+			false: 
+				if !Global.right_arm_out: 
+					Global.right_collision = false
+					Global.right_raycast_point = target_point
 
 func create_point():
 	collision_point = get_collision_point()
 	match Global.leftclicked:
 		true: if !Global.left_arm_out:
+			Global.left_collision = true
 			Global.left_raycast_point = collision_point
 		false: if !Global.right_arm_out: 
+			Global.right_collision = true
 			Global.right_raycast_point = collision_point
 	#create_debug()
 
