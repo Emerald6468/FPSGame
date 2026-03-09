@@ -1,4 +1,4 @@
-extends CSGBox3D
+extends RigidBody3D
 
 var touched = false
 var hand = "left"
