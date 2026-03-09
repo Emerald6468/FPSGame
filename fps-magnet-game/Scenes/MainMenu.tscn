@@ -4,6 +4,10 @@
 [ext_resource type="Theme" uid="uid://c7vkoq36pmyg4" path="res://Assets/Themes/main_theme.tres" id="2"]
 [ext_resource type="ArrayMesh" uid="uid://cyjb1gv3n10ib" path="res://Assets/Materials/Meshes/left_hand.res" id="3_ghw46"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_menu_hand"]
+albedo_color = Color(1, 0.18039216, 0.29803923, 1)
+roughness = 0.5
+
 [node name="MainMenu" type="Control" unique_id=940262378]
 layout_mode = 3
 anchors_preset = 15
@@ -104,22 +108,35 @@ stretch = true
 [node name="HandViewport" type="SubViewport" parent="HandView" unique_id=3002]
 transparent_bg = true
 handle_input_locally = false
+msaa_3d = 2
 size = Vector2i(64, 64)
 render_target_update_mode = 4
 
-[node name="OmniLight3D" type="OmniLight3D" parent="HandView/HandViewport" unique_id=3003]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7424445, 1, 1.5)
-light_energy = 5.889
-omni_range = 8.0
+[node name="KeyLight" type="OmniLight3D" parent="HandView/HandViewport" unique_id=3003]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 1.1, 1.8)
+light_color = Color(1, 0.9529412, 0.88235295, 1)
+light_energy = 3.4
+omni_range = 6.0
 
 [node name="Camera3D" type="Camera3D" parent="HandView/HandViewport" unique_id=3004]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 2)
-projection = 1
-size = 1.6
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 2.3)
+fov = 36.0
 
 [node name="HandMesh" type="MeshInstance3D" parent="HandView/HandViewport" unique_id=3005]
-transform = Transform3D(26.953024, 0, -13.173245, 0, 29.999994, 0, 13.173245, 0, 26.953024, -0.2595457, 0, 0.2586702)
+transform = Transform3D(28.422514, 0, -9.600035, 0, 29.999994, 0, 9.600035, 0, 28.422514, -0.2595457, 0, 0.2586702)
 mesh = ExtResource("3_ghw46")
+surface_material_override/0 = SubResource("StandardMaterial3D_menu_hand")
+
+[node name="FillLight" type="OmniLight3D" parent="HandView/HandViewport" unique_id=3006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.35, 1.45)
+light_color = Color(0.72156864, 0.8156863, 1, 1)
+light_energy = 1.35
+omni_range = 6.0
+
+[node name="RimLight" type="OmniLight3D" parent="HandView/HandViewport" unique_id=3007]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.35, 1.2, -1.1)
+light_color = Color(1, 0.81960785, 0.72156864, 1)
+light_energy = 1.9
 
 [node name="PopupBackdrop" type="ColorRect" parent="." unique_id=1551662633]
 visible = false

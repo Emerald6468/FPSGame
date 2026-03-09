@@ -32,6 +32,7 @@ func _on_menu_pressed() -> void:
 
 func _on_reload_pressed() -> void:
 	get_tree().paused = false
+	Global.reset_state()
 	get_tree().reload_current_scene()
 
 func _on_exit_pressed() -> void:

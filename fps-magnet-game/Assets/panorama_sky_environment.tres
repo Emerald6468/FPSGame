@@ -1,0 +1,13 @@
+[gd_resource type="Environment" format=3 uid="uid://bsv8jc216y5cl"]
+
+[ext_resource type="Texture2D" uid="uid://b8ur48mccafbq" path="res://Assets/Panorama_Sky_25-512x512.png" id="1_sky"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_main"]
+panorama = ExtResource("1_sky")
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("PanoramaSkyMaterial_main")
+
+[resource]
+background_mode = 2
+sky = SubResource("Sky_main")

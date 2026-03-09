@@ -1,0 +1,327 @@
+[gd_scene format=3 uid="uid://b4biva7v2bxd"]
+
+[ext_resource type="PackedScene" uid="uid://c3cv48njgxap4" path="res://Prefabs/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://r78fmtff3eqj" path="res://Scenes/PauseMenu.tscn" id="2_pausemenu"]
+[ext_resource type="Script" uid="uid://crabvdvlf7284" path="res://Scripts/moving_platform.gd" id="3_moveplat"]
+[ext_resource type="PackedScene" uid="uid://ce3q0t5ayj5dv" path="res://Prefabs/moveable_cube.tscn" id="4_cube"]
+[ext_resource type="Script" uid="uid://c82je60iknmjl" path="res://Scripts/level_controller.gd" id="5_level"]
+[ext_resource type="Script" uid="uid://bii2out3y144" path="res://Scripts/button_trigger.gd" id="6_button"]
+[ext_resource type="Script" uid="uid://n6btrm2c4fqk" path="res://Scripts/door_controller.gd" id="7_door"]
+[ext_resource type="Script" uid="uid://br0x7djuhebfq" path="res://Scripts/kill_zone.gd" id="8_kill"]
+[ext_resource type="PackedScene" uid="uid://cbdcfifx87kif" path="res://Assets/placeholder button (unpushed).fbx" id="9_button_up"]
+[ext_resource type="Environment" uid="uid://bsv8jc216y5cl" path="res://Assets/panorama_sky_environment.tres" id="10_sky_env"]
+
+[sub_resource type="StandardMaterial3D" id="mat_floor"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_wall"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_button"]
+albedo_color = Color(0.85, 0.75, 0.15, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_button_trigger"]
+size = Vector3(2.5, 1.2, 2.5)
+
+[sub_resource type="StandardMaterial3D" id="mat_door"]
+albedo_color = Color(0.55, 0.35, 0.15, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_kill"]
+transparency = 1
+albedo_color = Color(0.8, 0.15, 0.15, 0.08)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pit"]
+size = Vector3(10, 2, 8)
+
+[sub_resource type="StandardMaterial3D" id="mat_grabber"]
+albedo_color = Color(0.23529412, 0.37254903, 0.9254902, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_repeller"]
+albedo_color = Color(0.99574894, 0.4637149, 0.639248, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pit_final"]
+size = Vector3(16, 2, 8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_plat"]
+size = Vector3(4, 0.4, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_plat"]
+size = Vector3(4, 0.4, 4)
+
+[sub_resource type="StandardMaterial3D" id="mat_platform"]
+albedo_color = Color(0.2, 0.7, 0.3, 1)
+
+[node name="Level_3" type="Node3D" unique_id=819267536]
+script = ExtResource("5_level")
+
+[node name="Player" parent="." unique_id=862962012 instance=ExtResource("1_player")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 1.1, 6)
+
+[node name="PauseMenu" parent="." unique_id=542251386 instance=ExtResource("2_pausemenu")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1597630001]
+environment = ExtResource("10_sky_env")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=670941324]
+transform = Transform3D(-0.70710677, 0.18301272, -0.68301266, -0.70710677, -0.18301272, 0.68301266, 0, 0.9659258, 0.25881907, -4, 11, 27)
+light_energy = 1.7
+shadow_enabled = true
+
+[node name="Map" type="Node3D" parent="." unique_id=1203517482]
+
+[node name="Room1" type="Node3D" parent="Map" unique_id=1411107574]
+
+[node name="Floor" type="CSGBox3D" parent="Map/Room1" unique_id=1769005774 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 6)
+use_collision = true
+size = Vector3(16, 0.5, 14)
+material = SubResource("mat_floor")
+
+[node name="Wall_Back" type="CSGBox3D" parent="Map/Room1" unique_id=1350650989 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -1)
+use_collision = true
+size = Vector3(16, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Left" type="CSGBox3D" parent="Map/Room1" unique_id=1529423173 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.25, 2, 6)
+use_collision = true
+size = Vector3(0.5, 4, 14)
+material = SubResource("mat_wall")
+
+[node name="Wall_Right" type="CSGBox3D" parent="Map/Room1" unique_id=1486023751 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 2, 6)
+use_collision = true
+size = Vector3(0.5, 4, 14)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Left" type="CSGBox3D" parent="Map/Room1" unique_id=564545589 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 13)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Right" type="CSGBox3D" parent="Map/Room1" unique_id=829506354 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 13)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Button" type="CSGBox3D" parent="Map/Room1" unique_id=1704917673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.05, 9)
+use_collision = true
+size = Vector3(1.5, 0.1, 1.5)
+material = SubResource("mat_button")
+script = ExtResource("6_button")
+door_paths = Array[NodePath]([NodePath("../Door")])
+
+[node name="TriggerArea" type="Area3D" parent="Map/Room1/Button" unique_id=2060839816]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Room1/Button/TriggerArea" unique_id=9633581]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("BoxShape3D_button_trigger")
+
+[node name="ButtonUnpressed" parent="Map/Room1/Button" unique_id=1291292819 instance=ExtResource("9_button_up")]
+
+[node name="MoveableCube" parent="Map/Room1" unique_id=1704075733 instance=ExtResource("4_cube")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 3)
+
+[node name="Door" type="CSGBox3D" parent="Map/Room1" unique_id=1968772584]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 13)
+use_collision = true
+size = Vector3(4, 4, 0.4)
+material = SubResource("mat_door")
+script = ExtResource("7_door")
+
+[node name="Corridor" type="CSGBox3D" parent="Map" unique_id=1659912314 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 17.980682)
+use_collision = true
+size = Vector3(16, 0.5, 9.961365)
+material = SubResource("mat_floor")
+
+[node name="Room2" type="Node3D" parent="Map" unique_id=1230101446]
+
+[node name="Wall_Back_Left" type="CSGBox3D" parent="Map/Room2" unique_id=1303921242 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, 22)
+use_collision = true
+size = Vector3(6, 5, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Back_Right" type="CSGBox3D" parent="Map/Room2" unique_id=738983092 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 22)
+use_collision = true
+size = Vector3(6, 5, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Walkway_Start" type="CSGBox3D" parent="Map/Room2" unique_id=263268279 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 26)
+use_collision = true
+size = Vector3(8, 0.5, 6)
+material = SubResource("mat_floor")
+
+[node name="Walkway_End" type="CSGBox3D" parent="Map/Room2" unique_id=443290115 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 39.397987)
+use_collision = true
+size = Vector3(8, 0.5, 8)
+material = SubResource("mat_floor")
+
+[node name="Pit" type="CSGBox3D" parent="Map/Room2" unique_id=1321733179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 32.88798)
+use_collision = true
+size = Vector3(10, 0.5, 8)
+material = SubResource("mat_kill")
+
+[node name="KillZone" type="Area3D" parent="Map/Room2/Pit" unique_id=1218332463]
+script = ExtResource("8_kill")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Room2/Pit/KillZone" unique_id=262150785]
+shape = SubResource("BoxShape3D_pit")
+
+[node name="Wall_Left" type="CSGBox3D" parent="Map/Room2" unique_id=1762332310 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.25, 2.5, 31)
+use_collision = true
+size = Vector3(0.5, 5, 18)
+material = SubResource("mat_wall")
+
+[node name="Wall_Right" type="CSGBox3D" parent="Map/Room2" unique_id=142709982 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 2.5, 31)
+use_collision = true
+size = Vector3(0.5, 5, 18)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Left" type="CSGBox3D" parent="Map/Room2" unique_id=1344912063 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2.5, 42)
+use_collision = true
+size = Vector3(6, 5, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Right" type="CSGBox3D" parent="Map/Room2" unique_id=906119487 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2.5, 42)
+use_collision = true
+size = Vector3(6, 5, 0.5)
+material = SubResource("mat_wall")
+
+[node name="GrabberBlock_Player" type="CSGBox3D" parent="Map/Room2" unique_id=1059729235 groups=["PlayerMagnetBlocks", "Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 37.499504)
+use_collision = true
+size = Vector3(1.5, 2, 0.8)
+material = SubResource("mat_grabber")
+
+[node name="RepellerBlock_Player" type="CSGBox3D" parent="Map/Room2" unique_id=194124107 groups=["PlayerMagnetBlocks", "Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.034709454, 0.8, 26)
+use_collision = true
+size = Vector3(1.5, 2, 0.8)
+material = SubResource("mat_repeller")
+
+[node name="Room3" type="Node3D" parent="Map" unique_id=1404638869]
+
+[node name="Floor_Main" type="CSGBox3D" parent="Map/Room3" unique_id=1646834005 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 50)
+use_collision = true
+size = Vector3(16, 0.5, 10)
+material = SubResource("mat_floor")
+
+[node name="Wall_Back_Left" type="CSGBox3D" parent="Map/Room3" unique_id=166773452 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 45)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Back_Right" type="CSGBox3D" parent="Map/Room3" unique_id=1714502796 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 45)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Left" type="CSGBox3D" parent="Map/Room3" unique_id=824643197 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.25, 2, 50)
+use_collision = true
+size = Vector3(0.5, 4, 20)
+material = SubResource("mat_wall")
+
+[node name="Wall_Right" type="CSGBox3D" parent="Map/Room3" unique_id=1121701533 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.25, 2, 50)
+use_collision = true
+size = Vector3(0.5, 4, 20)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Left" type="CSGBox3D" parent="Map/Room3" unique_id=1079588710 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 70)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Wall_Front_Right" type="CSGBox3D" parent="Map/Room3" unique_id=110908423 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 70)
+use_collision = true
+size = Vector3(6, 4, 0.5)
+material = SubResource("mat_wall")
+
+[node name="Pit_Final" type="CSGBox3D" parent="Map/Room3" unique_id=127945580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 56)
+use_collision = true
+size = Vector3(16, 0.5, 8)
+material = SubResource("mat_kill")
+
+[node name="KillZone" type="Area3D" parent="Map/Room3/Pit_Final" unique_id=633853995]
+script = ExtResource("8_kill")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Room3/Pit_Final/KillZone" unique_id=1526485573]
+shape = SubResource("BoxShape3D_pit_final")
+
+[node name="MovingPlatform" type="AnimatableBody3D" parent="Map/Room3" unique_id=1976930190]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 58.841427)
+script = ExtResource("3_moveplat")
+position_a = Vector3(5, 0, 58.841427)
+position_b = Vector3(-5, 0, 58.841427)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Room3/MovingPlatform" unique_id=681227980]
+shape = SubResource("BoxShape3D_plat")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Map/Room3/MovingPlatform" unique_id=1511181858]
+mesh = SubResource("BoxMesh_plat")
+surface_material_override/0 = SubResource("mat_platform")
+
+[node name="MoveableCube" parent="Map/Room3" unique_id=713052758 instance=ExtResource("4_cube")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 48)
+
+[node name="Button" type="CSGBox3D" parent="Map/Room3" unique_id=1743080018]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6691303, 0.05, 67.43234)
+use_collision = true
+size = Vector3(1.5, 0.1, 1.5)
+material = SubResource("mat_button")
+script = ExtResource("6_button")
+door_paths = Array[NodePath]([NodePath("../Door")])
+
+[node name="TriggerArea" type="Area3D" parent="Map/Room3/Button" unique_id=820132015]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Map/Room3/Button/TriggerArea" unique_id=763437050]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+shape = SubResource("BoxShape3D_button_trigger")
+
+[node name="ButtonUnpressed" parent="Map/Room3/Button" unique_id=1640460807 instance=ExtResource("9_button_up")]
+
+[node name="GrabberBlock_Player" type="CSGBox3D" parent="Map/Room3" unique_id=727882828 groups=["PlayerMagnetBlocks", "Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.198019, 2, 65.43214)
+use_collision = true
+size = Vector3(1.5, 2, 0.8)
+material = SubResource("mat_grabber")
+
+[node name="RepellerBlock_Player" type="CSGBox3D" parent="Map/Room3" unique_id=964342090 groups=["PlayerMagnetBlocks", "Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.2, 52)
+use_collision = true
+size = Vector3(1.5, 2, 0.8)
+material = SubResource("mat_repeller")
+
+[node name="Door" type="CSGBox3D" parent="Map/Room3" unique_id=145288261]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 70)
+use_collision = true
+size = Vector3(4, 4, 0.4)
+material = SubResource("mat_door")
+script = ExtResource("7_door")
+
+[node name="ExitFloor" type="CSGBox3D" parent="Map/Room3" unique_id=1722340682 groups=["Walls"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 66)
+use_collision = true
+size = Vector3(8, 0.5, 8)
+material = SubResource("mat_floor")
