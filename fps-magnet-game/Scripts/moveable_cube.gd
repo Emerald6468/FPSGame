@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends CSGBox3D
 
 var touched = false
 # Called when the node enters the scene tree for the first time.
