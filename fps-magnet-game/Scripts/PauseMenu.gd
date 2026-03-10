@@ -1,5 +1,7 @@
 extends Control
 
+@onready var resume_button: Button = $CenterContainer/PanelContainer/VBoxContainer/ResumeButton
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -18,6 +20,7 @@ func _toggle_pause() -> void:
 	
 	if paused:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		resume_button.grab_focus()
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
