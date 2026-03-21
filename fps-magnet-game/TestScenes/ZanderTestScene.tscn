@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://r78fmtff3eqj" path="res://Scenes/PauseMenu.tscn" id="1_l8m6k"]
 [ext_resource type="PackedScene" uid="uid://c3cv48njgxap4" path="res://Prefabs/player.tscn" id="2_l8m6k"]
+[ext_resource type="PackedScene" uid="uid://6kggqnev006r" path="res://Prefabs/magnetic_wall.tscn" id="3_gxa7t"]
 [ext_resource type="PackedScene" uid="uid://ce3q0t5ayj5dv" path="res://Prefabs/moveable_cube.tscn" id="3_qm7o4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_l8m6k"]
@@ -24,6 +25,7 @@ albedo_color = Color(0.5035201, 0.97014636, 0.62136567, 1)
 material = SubResource("StandardMaterial3D_l8m6k")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qm7o4"]
+size = Vector3(0.001, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gxa7t"]
 albedo_color = Color(0.6104941, 0.00031025082, 0.62003845, 1)
@@ -69,6 +71,9 @@ shape = SubResource("BoxShape3D_qm7o4")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wall2/CollisionShape3D" unique_id=1344408024]
 mesh = SubResource("BoxMesh_vsw3f")
+
+[node name="MagneticWall" parent="." unique_id=1291361953 instance=ExtResource("3_gxa7t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.3075724, 1.157341, -18.636871)
 
 [node name="Wall3" type="StaticBody3D" parent="." unique_id=626875483 groups=["Walls"]]
 transform = Transform3D(2.9249961, 0, 0, 0, 4.8295, 0, 0, 0, 2.6594563, 10.857229, 1.157341, 8.643327)

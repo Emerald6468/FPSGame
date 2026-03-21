@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://6kggqnev006r"]
+
+[ext_resource type="Script" uid="uid://ch03syjdmjacp" path="res://Scripts/magnetic_wall.gd" id="1_eg8s2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qm7o4"]
+size = Vector3(0.001, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abw0d"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o2kdi"]
+material = SubResource("StandardMaterial3D_abw0d")
+
+[node name="MagneticWall" type="StaticBody3D" unique_id=1291361953 groups=["Walls"]]
+script = ExtResource("1_eg8s2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=297217190]
+shape = SubResource("BoxShape3D_qm7o4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1281811510]
+transform = Transform3D(7.1167774, 0, 0, 0, 4.296054, 0, 0, 0, 1.0000001, 0, 0, 0)
+mesh = SubResource("BoxMesh_o2kdi")
