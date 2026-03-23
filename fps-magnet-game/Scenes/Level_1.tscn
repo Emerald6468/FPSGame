@@ -10,6 +10,10 @@
 [ext_resource type="Script" uid="uid://br0x7djuhebfq" path="res://Scripts/kill_zone.gd" id="6_kill"]
 [ext_resource type="PackedScene" uid="uid://cbdcfifx87kif" path="res://Assets/placeholder button (unpushed).fbx" id="7_button_up"]
 [ext_resource type="Environment" uid="uid://bsv8jc216y5cl" path="res://Assets/panorama_sky_environment.tres" id="8_sky_env"]
+[ext_resource type="PackedScene" path="res://Prefabs/next_level_trigger.tscn" id="11_2uqsa"]
+
+[sub_resource type="StandardMaterial3D" id="mat_wall"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
 albedo_color = Color(0.3, 0.3, 0.3, 1)
@@ -20,9 +24,6 @@ albedo_color = Color(0.8, 0.14901961, 0.14901961, 0.49411765)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pit_kill"]
 size = Vector3(33, 2, 21)
-
-[sub_resource type="StandardMaterial3D" id="mat_wall"]
-albedo_color = Color(0.5, 0.5, 0.5, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnunq"]
 transparency = 1
@@ -68,6 +69,36 @@ environment = ExtResource("8_sky_env")
 transform = Transform3D(-0.7071068, 0.18301272, -0.6830127, -0.7071068, -0.18301272, 0.6830127, 0, 0.9659258, 0.2588191, 15, 23, 30)
 light_energy = 1.7
 shadow_enabled = true
+
+[node name="Roofs" type="Node3D" parent="." unique_id=93160410]
+
+[node name="MainRoof" type="CSGBox3D" parent="Roofs" unique_id=242162223]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 4.25, 24)
+use_collision = true
+size = Vector3(31, 0.5, 49)
+material = SubResource("mat_wall")
+
+[node name="LevelLights" type="Node3D" parent="." unique_id=2068533535]
+
+[node name="Room1Light" type="OmniLight3D" parent="LevelLights" unique_id=1684469658]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8, 3.3, 42)
+light_energy = 1.45
+omni_range = 16.0
+
+[node name="Room2Light" type="OmniLight3D" parent="LevelLights" unique_id=2094504032]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.8, 3.25, 30)
+light_energy = 1.35
+omni_range = 15.0
+
+[node name="Room3Light" type="OmniLight3D" parent="LevelLights" unique_id=724972874]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.3, 3.25, 18)
+light_energy = 1.25
+omni_range = 15.0
+
+[node name="ExitLight" type="OmniLight3D" parent="LevelLights" unique_id=255116883]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.8, 3.2, 10.8)
+light_energy = 1.2
+omni_range = 13.0
 
 [node name="Floors" type="Node3D" parent="." unique_id=1103456144]
 
@@ -333,3 +364,7 @@ script = ExtResource("6_kill")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Room3/ObjectKil_2/KillZone" unique_id=1785763451]
 shape = SubResource("BoxShape3D_wall_kill_b")
+
+[node name="NextLevelTrigger" parent="." unique_id=1027114503 instance=ExtResource("11_2uqsa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.937136, 0, 12.892062)
+next_level_scene = "res://Scenes/Level_2.tscn"

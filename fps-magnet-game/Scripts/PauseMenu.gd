@@ -34,8 +34,12 @@ func _on_menu_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")
 
 func _on_reload_pressed() -> void:
-	get_tree().paused = false
 	Global.reset_state()
+	var current_scene := get_tree().current_scene
+	if current_scene and not current_scene.scene_file_path.is_empty():
+		await ScreenFader.quick_scene_transition(current_scene.scene_file_path)
+		return
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 func _on_exit_pressed() -> void:

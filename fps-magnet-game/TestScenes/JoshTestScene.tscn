@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c3cv48njgxap4" path="res://Prefabs/player.tscn" id="1_aaj0a"]
 [ext_resource type="Script" uid="uid://crabvdvlf7284" path="res://Scripts/moving_platform.gd" id="2_twc1a"]
+[ext_resource type="PackedScene" path="res://Prefabs/next_level_trigger.tscn" id="4_3mmmn"]
 [ext_resource type="PackedScene" uid="uid://r78fmtff3eqj" path="res://Scenes/PauseMenu.tscn" id="pause_menu"]
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
@@ -93,3 +94,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_rlfb2")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=39197047]
 transform = Transform3D(1, 0, 0, 0, -0.38947764, 0.92103595, 0, -0.92103595, -0.38947764, 21.315998, 19.71637, 26.686007)
 light_energy = 2.0
+
+[node name="NextLevelTrigger" parent="." unique_id=1764992892 instance=ExtResource("4_3mmmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 19)
+next_level_scene = "uid://bj607l83ewgis"

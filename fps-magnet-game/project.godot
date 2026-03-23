@@ -18,6 +18,7 @@ config/icon="res://Assets/icon.svg"
 [autoload]
 
 Global="*uid://xfy62xv7vtat"
+ScreenFader="*res://Scripts/screen_fader.gd"
 
 [display]
 

@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://ce3q0t5ayj5dv" path="res://Prefabs/moveable_cube.tscn" id="8_cube"]
 [ext_resource type="Script" uid="uid://n6btrm2c4fqk" path="res://Scripts/door_controller.gd" id="9_door"]
 [ext_resource type="Environment" uid="uid://bsv8jc216y5cl" path="res://Assets/panorama_sky_environment.tres" id="10_sky_env"]
+[ext_resource type="PackedScene" path="res://Prefabs/next_level_trigger.tscn" id="11_5ufib"]
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
 albedo_color = Color(0.28, 0.28, 0.28, 1)
@@ -244,3 +245,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023779273, 1.0551978, 44.4
 use_collision = true
 size = Vector3(1.895813, 2.0545654, 0.94273376)
 material = SubResource("StandardMaterial3D_wn4i5")
+
+[node name="NextLevelTrigger" parent="." unique_id=803889183 instance=ExtResource("11_5ufib")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11620331, 0.05880928, 58.82233)
+next_level_scene = "res://Scenes/Level_3.tscn"

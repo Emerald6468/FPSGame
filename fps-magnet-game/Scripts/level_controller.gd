@@ -9,6 +9,7 @@ var player_start_transform: Transform3D
 ## Stores each cube's spawn
 var cube_start_transforms: Dictionary = {}
 var is_respawning := false
+var death_flow_active := false
 
 func _ready() -> void:
 	player = get_node_or_null(player_path) as CharacterBody3D
@@ -22,13 +23,23 @@ func _physics_process(_delta: float) -> void:
 	if is_respawning:
 		return
 	if player and player.global_position.y < respawn_y_limit:
-		respawn_to_level_start()
+		handle_player_death()
 		return
 	for cube in cube_start_transforms.keys():
 		if not is_instance_valid(cube):
 			continue
 		if cube.global_position.y < respawn_y_limit:
 			respawn_cube(cube)
+
+func handle_player_death() -> void:
+	if is_respawning or death_flow_active:
+		return
+	death_flow_active = true
+	ScreenFader.show_death_menu(Callable(self, "_retry_from_death"))
+
+func _retry_from_death() -> void:
+	death_flow_active = false
+	respawn_to_level_start()
 
 func respawn_to_level_start() -> void:
 	# Full respawn resets everything

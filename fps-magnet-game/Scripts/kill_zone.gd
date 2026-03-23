@@ -22,7 +22,7 @@ func _on_body_entered(body: Node) -> void:
 		return
 	# Player deaths reset the level,  cube deaths only restore that cube.
 	if body is CharacterBody3D and target_mode != TargetMode.CUBES:
-		level_controller.respawn_to_level_start()
+		level_controller.handle_player_death()
 		return
 	if body is RigidBody3D and body.is_in_group("Grabbable") and target_mode != TargetMode.PLAYER:
 		level_controller.respawn_cube(body)

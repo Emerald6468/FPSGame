@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://br0x7djuhebfq" path="res://Scripts/kill_zone.gd" id="8_kill"]
 [ext_resource type="PackedScene" uid="uid://cbdcfifx87kif" path="res://Assets/placeholder button (unpushed).fbx" id="9_button_up"]
 [ext_resource type="Environment" uid="uid://bsv8jc216y5cl" path="res://Assets/panorama_sky_environment.tres" id="10_sky_env"]
+[ext_resource type="PackedScene" path="res://Prefabs/next_level_trigger.tscn" id="11_151xs"]
 
 [sub_resource type="StandardMaterial3D" id="mat_floor"]
 albedo_color = Color(0.3, 0.3, 0.3, 1)
@@ -321,7 +322,11 @@ material = SubResource("mat_door")
 script = ExtResource("7_door")
 
 [node name="ExitFloor" type="CSGBox3D" parent="Map/Room3" unique_id=1722340682 groups=["Walls"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 66)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 72.296814)
 use_collision = true
-size = Vector3(8, 0.5, 8)
+size = Vector3(8, 0.5, 20.593628)
 material = SubResource("mat_floor")
+
+[node name="NextLevelTrigger" parent="." unique_id=514775120 instance=ExtResource("11_151xs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09132671, 0, 77.61267)
+next_level_scene = "res://Scenes/Level_4.tscn"

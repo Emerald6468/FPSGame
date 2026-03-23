@@ -159,7 +159,7 @@ func _on_row_pressed(row_name: String) -> void:
 	match row_name:
 		"start":
 			await _play_pull_animation("start")
-			get_tree().change_scene_to_file("res://Scenes/Level_1.tscn")
+			await ScreenFader.quick_scene_transition("res://Scenes/Level_1.tscn")
 		"options":
 			await _play_pull_animation("options")
 			# add options scene when I get around it it 
