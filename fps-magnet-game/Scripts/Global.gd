@@ -21,6 +21,10 @@ var hand_speed = 0.0
 var left_holding_on = false
 var right_holding_on = false
 
+#magnent wall
+var player_pulled = false
+var player_pushed = false
+
 func reset_state() -> void:
 	left_arm_out = false
 	right_arm_out = false
@@ -38,3 +42,5 @@ func reset_state() -> void:
 	hand_speed = 0.0
 	left_holding_on = false
 	right_holding_on = false
+	player_pulled = false
+	player_pushed = false

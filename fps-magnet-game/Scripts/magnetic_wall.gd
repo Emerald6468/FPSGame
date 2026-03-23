@@ -1,5 +1,5 @@
 class_name MagneticWall
-extends StaticBody3D
+extends CSGBox3D
 
 @export var wallOn = true
 # Called when the node enters the scene tree for the first time.

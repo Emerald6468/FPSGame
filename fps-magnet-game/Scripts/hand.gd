@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 				self.queue_free()
 			if Global.justclicked and Global.leftclicked and !just_spawned:
 				#let go
-				if Global.left_holding_on:
+				if Global.left_holding_on or Global.player_pulled:
 					let_go(hand)
 				else:	
 					match left_hand_state:
@@ -51,8 +51,15 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in left_sensor_list:
 					if body.is_in_group("Walls"):
-						Global.left_extending = false
-						left_hand_state = hand_states.retracting
+						print("touch wall")
+						if body is MagneticWall and !dont_check_left:
+							#pulls player towards it
+							Global.player_pulled = true
+							print("touch magwall")
+							left_hand_state = hand_states.still
+						else:
+							Global.left_extending = false
+							left_hand_state = hand_states.retracting
 					elif body.is_in_group("Grabbable") and !Global.left_holding_on:
 						#grabbing on
 						if left_hand_state == hand_states.extending and !dont_check_left:
@@ -112,6 +119,7 @@ func let_go(hand):
 	match hand:
 		"left":
 			Global.left_holding_on = false
+			Global.player_pulled = false
 			left_letgo = true
 			if !dont_check_left:
 				dont_check_left = true

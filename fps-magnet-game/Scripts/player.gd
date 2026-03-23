@@ -28,7 +28,7 @@ var dont_check = false
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	
-	if not is_on_floor():
+	if not is_on_floor() and motion_mode == MOTION_MODE_GROUNDED:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
@@ -39,16 +39,23 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("test_right"):right_clicked()
 	# Get the input direction and handle the movement/deceleration.
 	#MOVEMENT
-	if !Global.left_arm_out and !Global.right_arm_out: current_speed = SPEED
-	else: current_speed = 2.0
-	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
+	if Global.player_pulled:
+		set_motion_mode(MOTION_MODE_FLOATING)
+		global_transform.origin = global_transform.origin.move_toward(Global.left_raycast_point,Global.hand_speed)
+	elif Global.player_pushed:
+		pass
 	else:
-		velocity.x = move_toward(velocity.x, 0, current_speed)
-		velocity.z = move_toward(velocity.z, 0, current_speed)
+		set_motion_mode(MOTION_MODE_GROUNDED)
+		if !Global.left_arm_out and !Global.right_arm_out: current_speed = SPEED
+		else: current_speed = 2.0
+		var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
+		var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+		if direction:
+			velocity.x = direction.x * current_speed
+			velocity.z = direction.z * current_speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, current_speed)
+			velocity.z = move_toward(velocity.z, 0, current_speed)
 	Global.player_point = self.global_position
 	
 
@@ -60,6 +67,8 @@ func _physics_process(delta: float) -> void:
 	
 	if despawn_zone.has_overlapping_bodies() and !dont_check:
 		for body in body_list:
+			if body is Cube:
+				body.set_touched(false)
 			if body is Hand:
 				var hand : Hand = body
 				if hand.hand == "left":

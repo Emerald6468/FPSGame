@@ -1,3 +1,4 @@
+class_name Cube
 extends RigidBody3D
 
 var touched = false
