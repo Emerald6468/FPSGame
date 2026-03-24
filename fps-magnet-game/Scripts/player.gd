@@ -72,8 +72,8 @@ func _physics_process(delta: float) -> void:
 			if body is Hand:
 				var hand : Hand = body
 				if hand.hand == "left":
-					Global.player_pulled = false
 					hand.queue_free()
+					set_deferred(Global.player_pulled,false)
 					Global.left_holding_on = false
 					Global.left_arm_out = false
 				if hand.hand == "right":
