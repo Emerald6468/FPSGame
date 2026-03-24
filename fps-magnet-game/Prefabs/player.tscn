@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://c3cv48njgxap4"]
 
 [ext_resource type="Script" uid="uid://bqbfykosf0sf6" path="res://Scripts/player.gd" id="1_y6xdh"]
+[ext_resource type="AudioStream" uid="uid://xkivylnr84y3" path="res://Assets/Sounds/Tomato/SquishStep1.wav" id="3_juxdh"]
 [ext_resource type="Script" uid="uid://jsidsq0f4o0m" path="res://player_ray_cast.gd" id="4_2nftw"]
+[ext_resource type="AudioStream" uid="uid://iq1js0bxt2nn" path="res://Assets/Sounds/Tomato/SquishStep2.wav" id="4_4qbli"]
+[ext_resource type="AudioStream" uid="uid://bsb771ynucf2a" path="res://Assets/Sounds/Tomato/SquishStep3.wav" id="5_08u7w"]
+[ext_resource type="AudioStream" uid="uid://c0a3165plc0hx" path="res://Assets/Sounds/Tomato/SquishStep4.wav" id="6_kgmex"]
+[ext_resource type="AudioStream" uid="uid://b10u8rhlvst7b" path="res://Assets/Sounds/Tomato/SquishStep5.wav" id="7_2xbkd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l8m6k"]
 
@@ -51,3 +56,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16.137835)
 
 [node name="FarthestPoint" type="Marker3D" parent="." unique_id=1510027904]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -21.404423)
+
+[node name="Step1" type="AudioStreamPlayer" parent="." unique_id=1308465251]
+unique_name_in_owner = true
+stream = ExtResource("3_juxdh")
+
+[node name="Step2" type="AudioStreamPlayer" parent="." unique_id=128301259]
+unique_name_in_owner = true
+stream = ExtResource("4_4qbli")
+
+[node name="Step3" type="AudioStreamPlayer" parent="." unique_id=257889825]
+unique_name_in_owner = true
+stream = ExtResource("5_08u7w")
+
+[node name="Step4" type="AudioStreamPlayer" parent="." unique_id=2038725589]
+unique_name_in_owner = true
+stream = ExtResource("6_kgmex")
+
+[node name="Step5" type="AudioStreamPlayer" parent="." unique_id=1066841074]
+unique_name_in_owner = true
+stream = ExtResource("7_2xbkd")

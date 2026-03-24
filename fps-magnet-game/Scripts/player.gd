@@ -24,7 +24,14 @@ var dont_check = false
 @export var player_ray_cast: RayCast3D
 @onready var farthest_point: Marker3D = $FarthestPoint
 
-
+#Sounds
+@onready var step_1: AudioStreamPlayer = %Step1
+@onready var step_2: AudioStreamPlayer = $Step2
+@onready var step_3: AudioStreamPlayer = $Step3
+@onready var step_4: AudioStreamPlayer = $Step4
+@onready var step_5: AudioStreamPlayer = $Step5
+@onready var current_step_sound = step_1
+var step_num = 1
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	
@@ -56,6 +63,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, current_speed)
 			velocity.z = move_toward(velocity.z, 0, current_speed)
+		if velocity.x > .5 or velocity.z > .5: step_sounds()
 	Global.player_point = self.global_position
 	
 
@@ -73,7 +81,7 @@ func _physics_process(delta: float) -> void:
 				var hand : Hand = body
 				if hand.hand == "left":
 					hand.queue_free()
-					set_deferred(Global.player_pulled,false)
+					set_deferred("Global.player_pulled",false)
 					Global.left_holding_on = false
 					Global.left_arm_out = false
 				if hand.hand == "right":
@@ -135,3 +143,19 @@ func _rotate_camera(delta: float, sens_mod: float = 1.0):
 	camera.rotation.x = clamp(camera.rotation.x - look_dir.y * camera_sens * sens_mod * delta, -1.5,1.5)
 	look_dir = Vector2.ZERO
 	
+func step_sounds():
+	if !current_step_sound.playing:
+		step_num = round(randf_range(1,5))
+		match step_num:
+			1:
+				current_step_sound = step_1
+			2:
+				current_step_sound = step_2
+			3:
+				current_step_sound = step_4
+			4:
+				current_step_sound = step_5
+			5:
+				current_step_sound = step_1
+		current_step_sound.play()
+	pass
