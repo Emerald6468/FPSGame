@@ -1,22 +1,23 @@
 [gd_scene format=3 uid="uid://6kggqnev006r"]
 
-[ext_resource type="Script" uid="uid://ch03syjdmjacp" path="res://Scripts/magnetic_wall.gd" id="1_eg8s2"]
+[ext_resource type="Script" uid="uid://ch03syjdmjacp" path="res://Scripts/magnetic_wall.gd" id="1_magnetic_script"]
+[ext_resource type="Texture2D" uid="uid://ca2gmjlgwpfbg" path="res://Assets/Red_hand.svg.png" id="2_red_hand"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qm7o4"]
-size = Vector3(0.001, 1, 1)
+[sub_resource type="StandardMaterial3D" id="mat_magnetic_wall"]
+albedo_color = Color(0.23529412, 0.37254903, 0.9254902, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_abw0d"]
-albedo_color = Color(1, 0, 0, 1)
+[node name="MagneticWall" type="CSGBox3D" unique_id=1291361953 groups=["PlayerMagnetBlocks", "Walls"]]
+use_collision = true
+size = Vector3(1.5, 2, 0.8)
+material = SubResource("mat_magnetic_wall")
+script = ExtResource("1_magnetic_script")
 
-[sub_resource type="BoxMesh" id="BoxMesh_o2kdi"]
-material = SubResource("StandardMaterial3D_abw0d")
+[node name="HandMarkFront" type="Sprite3D" parent="." unique_id=1862140011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.401)
+pixel_size = 0.003
+texture = ExtResource("2_red_hand")
 
-[node name="MagneticWall" type="StaticBody3D" unique_id=1291361953 groups=["Walls"]]
-script = ExtResource("1_eg8s2")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=297217190]
-shape = SubResource("BoxShape3D_qm7o4")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1281811510]
-transform = Transform3D(7.1167774, 0, 0, 0, 4.296054, 0, 0, 0, 1.0000001, 0, 0, 0)
-mesh = SubResource("BoxMesh_o2kdi")
+[node name="HandMarkBack" type="Sprite3D" parent="." unique_id=545092287]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, -0.401)
+pixel_size = 0.003
+texture = ExtResource("2_red_hand")

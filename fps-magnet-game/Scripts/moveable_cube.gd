@@ -3,9 +3,25 @@ extends RigidBody3D
 
 var touched = false
 var hand = "left"
+
+func _get_first_mesh_instance(node: Node) -> MeshInstance3D:
+	for child in node.get_children():
+		if child is MeshInstance3D:
+			return child
+		var found := _get_first_mesh_instance(child)
+		if found:
+			return found
+	return null
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	var mesh_instance := _get_first_mesh_instance(self)
+	if mesh_instance:
+		var material := StandardMaterial3D.new()
+		material.albedo_color = Color(0.82, 0.82, 0.82)
+		material.metallic = 0.1
+		material.roughness = 0.2
+		mesh_instance.material_override = material
 
 func set_touched(b:bool):
 	touched = b
