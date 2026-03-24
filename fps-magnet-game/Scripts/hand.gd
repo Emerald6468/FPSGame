@@ -29,7 +29,7 @@ func _ready() -> void:
 		"right": right_hand_state = hand_states.extending
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	match hand:
 		"left":
 			if !Global.left_arm_out: 
@@ -118,8 +118,8 @@ func _process(delta: float) -> void:
 	
 	
 #let go
-func let_go(hand):
-	match hand:
+func let_go(which_hand):
+	match which_hand:
 		"left":
 			Global.left_holding_on = false
 			Global.player_pulled = false
@@ -137,12 +137,12 @@ func let_go(hand):
 				await get_tree().create_timer(.1).timeout
 				dont_check_right = false
 #movement
-func move_hand(hand_state,hand):
+func move_hand(hand_state, which_hand):
 	if !Global.justclicked:
 		match hand_state:
 			hand_states.extending:
 				#print("extending")
-				match hand:
+				match which_hand:
 					"left": 
 						if global_position.distance_to(Global.left_raycast_point) < .2 and !Global.left_collision: 
 							left_hand_state = hand_states.retracting
@@ -155,7 +155,7 @@ func move_hand(hand_state,hand):
 						else:
 							if global_position.distance_to(Global.right_farthest_point) < .2: 
 								right_hand_state = hand_states.retracting
-								let_go(hand)
+								let_go(which_hand)
 							else:global_transform.origin = global_transform.origin.move_toward(Global.right_farthest_point,Hand_Speed)
 			hand_states.retracting:
 				#print("retracting")

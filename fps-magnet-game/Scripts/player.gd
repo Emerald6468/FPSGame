@@ -21,6 +21,11 @@ var dont_check = false
 @onready var left_hand_scene = preload("res://Prefabs/left_hand.tscn")
 @onready var right_hand_scene = preload("res://Prefabs/right_hand.tscn")
 
+var left_hand_instance: Node3D = null
+var right_hand_instance: Node3D = null
+var left_arm_visual: MeshInstance3D = null
+var right_arm_visual: MeshInstance3D = null
+
 @export var player_ray_cast: RayCast3D
 @onready var farthest_point: Marker3D = $FarthestPoint
 
@@ -32,6 +37,11 @@ var dont_check = false
 @onready var step_5: AudioStreamPlayer = $Step5
 @onready var current_step_sound = step_1
 var step_num = 1
+
+func _ready() -> void:
+	left_arm_visual = _create_arm_visual_node("LeftArmVisual")
+	right_arm_visual = _create_arm_visual_node("RightArmVisual")
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	
@@ -81,15 +91,18 @@ func _physics_process(delta: float) -> void:
 				var hand : Hand = body
 				if hand.hand == "left":
 					hand.queue_free()
+					left_hand_instance = null
 					set_deferred("Global.player_pulled",false)
 					Global.left_holding_on = false
 					Global.left_arm_out = false
 				if hand.hand == "right":
 					hand.queue_free()
+					right_hand_instance = null
 					Global.right_holding_on = false
 					Global.right_arm_out = false
 	_rotate_camera(delta)
 	move_and_slide()
+	_update_arm_visuals()
 	
 func _input(event: InputEvent):
 	if event is InputEventMouseMotion: look_dir = event.relative * 0.01
@@ -122,6 +135,7 @@ func right_clicked():
 func spawn_lefthand():
 	Global.left_arm_out = true
 	var left_hand = left_hand_scene.instantiate()
+	left_hand_instance = left_hand
 	dont_check = true
 	add_sibling(left_hand)
 	left_hand.transform = left_spawn_point.global_transform
@@ -131,10 +145,66 @@ func spawn_righthand():
 	Global.right_arm_out = true
 	Global.right_arm_out = true
 	var right_hand = right_hand_scene.instantiate()
+	right_hand_instance = right_hand
 	dont_check = true
 	add_sibling(right_hand)
 	right_hand.transform = right_spawn_point.global_transform
 	dont_check = false
+
+func _create_arm_visual_node(node_name: String) -> MeshInstance3D:
+	var arm_mesh_instance := MeshInstance3D.new()
+	arm_mesh_instance.name = node_name
+	arm_mesh_instance.top_level = true
+	arm_mesh_instance.visible = false
+	arm_mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+	var arm_mesh := CylinderMesh.new()
+	arm_mesh.height = 1.0
+	arm_mesh.top_radius = 0.045
+	arm_mesh.bottom_radius = 0.045
+
+	var arm_material := StandardMaterial3D.new()
+	arm_material.albedo_color = Color.WHITE
+	arm_mesh.material = arm_material
+
+	arm_mesh_instance.mesh = arm_mesh
+	add_child(arm_mesh_instance)
+	return arm_mesh_instance
+
+func _update_arm_visuals() -> void:
+	if left_hand_instance != null and !is_instance_valid(left_hand_instance):
+		left_hand_instance = null
+	if right_hand_instance != null and !is_instance_valid(right_hand_instance):
+		right_hand_instance = null
+
+	_update_arm_visual(left_arm_visual, left_spawn_point.global_position, left_hand_instance, Global.left_arm_out)
+	_update_arm_visual(right_arm_visual, right_spawn_point.global_position, right_hand_instance, Global.right_arm_out)
+
+func _update_arm_visual(arm_mesh: MeshInstance3D, start_point: Vector3, hand_node: Node3D, arm_out: bool) -> void:
+	if arm_mesh == null:
+		return
+
+	if !arm_out or hand_node == null or !is_instance_valid(hand_node):
+		arm_mesh.visible = false
+		return
+
+	var end_point := hand_node.global_position
+	var arm_dir := end_point - start_point
+	var arm_length := arm_dir.length()
+	if arm_length <= 0.01:
+		arm_mesh.visible = false
+		return
+
+	var y_axis := arm_dir / arm_length
+	var x_axis := Vector3.FORWARD.cross(y_axis)
+	if x_axis.length() <= 0.01:
+		x_axis = Vector3.RIGHT.cross(y_axis)
+	x_axis = x_axis.normalized()
+	var z_axis := x_axis.cross(y_axis).normalized()
+
+	arm_mesh.global_transform = Transform3D(Basis(x_axis, y_axis, z_axis), (start_point + end_point) * 0.5)
+	arm_mesh.scale = Vector3(1.0, arm_length, 1.0)
+	arm_mesh.visible = true
 
 func _rotate_camera(delta: float, sens_mod: float = 1.0):
 	var input := Input.get_vector("ui_left","ui_right","ui_down","ui_up")

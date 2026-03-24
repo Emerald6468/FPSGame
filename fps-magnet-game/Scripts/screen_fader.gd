@@ -85,9 +85,9 @@ func _set_radius(radius: float) -> void:
 	if _overlay_material:
 		_overlay_material.set_shader_parameter("radius", radius)
 
-func _set_overlay_visible(visible: bool) -> void:
+func _set_overlay_visible(overlay_enabled: bool) -> void:
 	if _overlay_rect:
-		_overlay_rect.visible = visible
+		_overlay_rect.visible = overlay_enabled
 
 func _build_overlay() -> void:
 	_overlay_rect = ColorRect.new()

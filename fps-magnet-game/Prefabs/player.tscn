@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bqbfykosf0sf6" path="res://Scripts/player.gd" id="1_y6xdh"]
 [ext_resource type="AudioStream" uid="uid://xkivylnr84y3" path="res://Assets/Sounds/Tomato/SquishStep1.wav" id="3_juxdh"]
-[ext_resource type="Script" uid="uid://jsidsq0f4o0m" path="res://player_ray_cast.gd" id="4_2nftw"]
+[ext_resource type="Script" uid="uid://jsidsq0f4o0m" path="res://Scripts/player_ray_cast.gd" id="4_2nftw"]
 [ext_resource type="AudioStream" uid="uid://iq1js0bxt2nn" path="res://Assets/Sounds/Tomato/SquishStep2.wav" id="4_4qbli"]
 [ext_resource type="AudioStream" uid="uid://bsb771ynucf2a" path="res://Assets/Sounds/Tomato/SquishStep3.wav" id="5_08u7w"]
 [ext_resource type="AudioStream" uid="uid://c0a3165plc0hx" path="res://Assets/Sounds/Tomato/SquishStep4.wav" id="6_kgmex"]
