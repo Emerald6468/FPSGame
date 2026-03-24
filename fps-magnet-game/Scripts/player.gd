@@ -73,7 +73,7 @@ func _physics_process(delta: float) -> void:
 				var hand : Hand = body
 				if hand.hand == "left":
 					hand.queue_free()
-					set_deferred(Global.player_pulled,false)
+					Global.set_deferred("player_pulled", false)
 					Global.left_holding_on = false
 					Global.left_arm_out = false
 				if hand.hand == "right":
@@ -100,7 +100,7 @@ func left_clicked():
 	player_ray_cast.clicked()
 	Global.left_farthest_point = farthest_point.global_position
 	if !Global.left_arm_out: call_deferred("spawn_lefthand")
-	set_deferred("Global.just_clicked", false)
+	Global.set_deferred("just_clicked", false)
 
 func right_clicked():
 	Global.leftclicked = false
@@ -109,7 +109,7 @@ func right_clicked():
 	player_ray_cast.clicked()
 	Global.right_farthest_point = farthest_point.global_position
 	if !Global.right_arm_out: call_deferred("spawn_righthand")
-	set_deferred("Global.just_clicked", false)
+	Global.set_deferred("just_clicked", false)
 	
 func spawn_lefthand():
 	Global.left_arm_out = true

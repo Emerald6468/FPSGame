@@ -1,14 +1,9 @@
 [gd_scene format=3 uid="uid://ce3q0t5ayj5dv"]
 
 [ext_resource type="Script" uid="uid://dcjdbqgppyq6f" path="res://Scripts/moveable_cube.gd" id="1_6ir7r"]
+[ext_resource type="PackedScene" uid="uid://hbt2m8ctq2gr" path="res://Prefabs/dent_all_sides.fbx" id="2_dent"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rl4jt"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wkiy6"]
-albedo_color = Color(1, 0.6039216, 0.22352941, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_clyts"]
-material = SubResource("StandardMaterial3D_wkiy6")
 
 [node name="MoveableCube" type="RigidBody3D" unique_id=1167759634 groups=["Grabbable"]]
 script = ExtResource("1_6ir7r")
@@ -16,5 +11,5 @@ script = ExtResource("1_6ir7r")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1464502459]
 shape = SubResource("BoxShape3D_rl4jt")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=778606456]
-mesh = SubResource("BoxMesh_clyts")
+[node name="DentAllSides" parent="CollisionShape3D" unique_id=778606456 instance=ExtResource("2_dent")]
+transform = Transform3D(9.36, 0, 0, 0, 9.36, 0, 0, 0, 9.36, 0, 0.010247707, -1.2274537)
