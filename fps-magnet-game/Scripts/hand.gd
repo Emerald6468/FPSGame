@@ -51,11 +51,9 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in left_sensor_list:
 					if body.is_in_group("Walls"):
-						print("touch wall")
 						if body is MagneticWall and !dont_check_left:
 							#pulls player towards it
 							Global.player_pulled = true
-							print("touch magwall")
 							left_hand_state = hand_states.still
 						else:
 							Global.left_extending = false
@@ -93,8 +91,13 @@ func _process(delta: float) -> void:
 			if hand_sensor.has_overlapping_bodies():
 				for body in right_sensor_list:
 					if body.is_in_group("Walls"):
-						Global.right_extending = false
-						right_hand_state = hand_states.retracting
+						if body is MagneticWall and !dont_check_left:
+							#pulls player towards it
+							Global.player_pushed = true
+							right_hand_state = hand_states.still
+						else:
+							Global.right_extending = false
+							right_hand_state = hand_states.retracting
 					elif body.is_in_group("Grabbable") and !Global.right_holding_on:
 						#grabbing on
 						if right_hand_state == hand_states.extending and !dont_check_right:
@@ -127,6 +130,7 @@ func let_go(hand):
 				dont_check_left = false
 		"right":
 			Global.right_holding_on = false
+			Global.player_pushed = false
 			right_letgo = true
 			if !dont_check_right:
 				dont_check_right = true
