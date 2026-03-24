@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://n6btrm2c4fqk" path="res://Scripts/door_controller.gd" id="7_door"]
 [ext_resource type="Script" uid="uid://br0x7djuhebfq" path="res://Scripts/kill_zone.gd" id="8_kill"]
 [ext_resource type="PackedScene" uid="uid://cbdcfifx87kif" path="res://Assets/placeholder button (unpushed).fbx" id="9_button_up"]
-[ext_resource type="Script" uid="uid://ch03syjdmjacp" path="res://Scripts/magnetic_wall.gd" id="10_dudvk"]
+[ext_resource type="PackedScene" uid="uid://6kggqnev006r" path="res://Prefabs/magnetic_wall.tscn" id="10_magnetic_wall"]
 [ext_resource type="Environment" uid="uid://bsv8jc216y5cl" path="res://Assets/panorama_sky_environment.tres" id="10_sky_env"]
 [ext_resource type="PackedScene" path="res://Prefabs/next_level_trigger.tscn" id="11_151xs"]
 [ext_resource type="Material" uid="uid://8vqy8c4agxoo" path="res://Assets/Materials/wall_material.tres" id="12_wall_mat"]
@@ -33,9 +33,6 @@ albedo_color = Color(0.8, 0.15, 0.15, 0.08)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pit"]
 size = Vector3(10, 2, 8)
-
-[sub_resource type="StandardMaterial3D" id="mat_grabber"]
-albedo_color = Color(0.23529412, 0.37254903, 0.9254902, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pit_final"]
 size = Vector3(16, 2, 8)
@@ -225,19 +222,11 @@ use_collision = true
 size = Vector3(6, 5, 0.5)
 material = ExtResource("12_wall_mat")
 
-[node name="GrabberBlock_Player" type="CSGBox3D" parent="Map/Room2" unique_id=1059729235 groups=["PlayerMagnetBlocks", "Walls"]]
+[node name="GrabberBlock_Player" parent="Map/Room2" unique_id=1059729235 instance=ExtResource("10_magnetic_wall")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.01049, 37.499504)
-use_collision = true
-size = Vector3(1.5, 2, 0.8)
-material = SubResource("mat_grabber")
-script = ExtResource("10_dudvk")
 
-[node name="GrabberBlock_Player_B" type="CSGBox3D" parent="Map/Room2" unique_id=194124107 groups=["PlayerMagnetBlocks", "Walls"]]
+[node name="GrabberBlock_Player_B" parent="Map/Room2" unique_id=194124107 instance=ExtResource("10_magnetic_wall")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.034709454, 0.8, 26)
-use_collision = true
-size = Vector3(1.5, 2, 0.8)
-material = SubResource("mat_grabber")
-script = ExtResource("10_dudvk")
 
 [node name="Room3" type="Node3D" parent="Map" unique_id=1404638869]
 
@@ -314,12 +303,8 @@ shape = SubResource("BoxShape3D_button_trigger")
 
 [node name="ButtonUnpressed" parent="Map/Room3/Button" unique_id=1640460807 instance=ExtResource("9_button_up")]
 
-[node name="GrabberBlock_Player" type="CSGBox3D" parent="Map/Room3" unique_id=727882828 groups=["PlayerMagnetBlocks", "Walls"]]
+[node name="GrabberBlock_Player" parent="Map/Room3" unique_id=727882828 instance=ExtResource("10_magnetic_wall")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0411973, 0.9692526, 67.32594)
-use_collision = true
-size = Vector3(1.5, 2, 0.8)
-material = SubResource("mat_grabber")
-script = ExtResource("10_dudvk")
 
 [node name="Door" type="CSGBox3D" parent="Map/Room3" unique_id=145288261]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 65.68246)
